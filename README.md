@@ -10,3 +10,7 @@
     <li> Обмен сообщениями с другими пользователями
     <li> Возможность оставить отзыв о сайте
 </ol>
+
+## Макет веб-приложения
+
+[Design in Figma](https://www.figma.com/file/hlFAIfFrGb8HHlGH0B2Uy7/HuaoMao?type=design&node-id=0-1&mode=design&t=LrnYanTZAVLeXxYG-0)
