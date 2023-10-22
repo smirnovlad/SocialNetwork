@@ -1,0 +1,7 @@
+.customBtn {
+    padding: 5px 15px;
+    background: transparent;
+    font-size: 15px;
+    color: rebeccapurple;
+    border: 2px rebeccapurple solid;
+}

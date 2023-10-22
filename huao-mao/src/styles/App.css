@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.App {
+    width: 700px;
+}
+
+.post {
+    border: 2px solid rebeccapurple;
+    align-items: center;
+    padding: 30px;
+    margin-top: 30px;
+    display: flex;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+}
