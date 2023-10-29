@@ -1,0 +1,10 @@
+.Profile {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    /*background-color: yellow;*/
+    left: 50%;
+    top: 50%;
+    position: relative;
+    transform: translate(-50%, -50%);
+}
