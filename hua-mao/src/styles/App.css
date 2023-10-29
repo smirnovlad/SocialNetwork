@@ -1,0 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    justify-content: center;
+}
+
+.App {
+    width: 100%;
+    display: inline-block;
+}

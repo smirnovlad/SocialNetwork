@@ -1,0 +1,9 @@
+.DefaultButton {
+    font-size: 24px;
+    border-radius: 10px;
+    border-width: 0;
+}
+
+.DefaultButton:hover {
+    border-width: 2px;
+}
