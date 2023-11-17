@@ -1,0 +1,14 @@
+.WelcomePage {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    /*justify-content: space-between;*/
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    margin: 0;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}

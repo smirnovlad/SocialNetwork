@@ -1,0 +1,15 @@
+.Message {
+    top: 10%;
+    position: relative;
+    display: block;
+}
+
+.ClickableMessage {
+    height: 50px;
+    padding-left: 15px;
+    padding-right: 5px;
+}
+
+.ClickableMessage:hover {
+    background-color: #F0F2F5;
+}
