@@ -1,7 +1,10 @@
 .MainContent {
     width: 80%;
-    height: 100%;
-    display: inline-block;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
     margin: 0;
     left: 50%;
     top: 50%;

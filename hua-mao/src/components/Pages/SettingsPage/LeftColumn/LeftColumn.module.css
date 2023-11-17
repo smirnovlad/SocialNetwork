@@ -1,0 +1,9 @@
+.LeftColumn {
+    width: 40%;
+    height: 100%;
+    min-height: 400px;
+    float: left;
+    position: relative;
+    display: inline-block;
+    /*background-color: red;*/
+}
