@@ -15,8 +15,6 @@
 
 [Design in Figma](https://www.figma.com/file/hlFAIfFrGb8HHlGH0B2Uy7/HuaoMao?type=design&node-id=0-1&mode=design&t=LrnYanTZAVLeXxYG-0)
 
-## Наброски главной страницы (авторизация + регистрация), а также страницы профиля
+## UI приложения
 
-![welcome_page.gif](samples%2Fwelcome_page.gif)
-
-![profile_page.gif](samples%2Fprofile_page.gif)
+![webapp.gif](..%2F..%2FDownloads%2Fwebapp.gif)

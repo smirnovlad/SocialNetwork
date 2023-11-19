@@ -6,7 +6,7 @@ const InputLine = (props) => {
     return (
         <div className={classes.InputLine}>
             <Text text={props.data.text} data={{width: 175, height: 60, fontSize: 24}}/>
-            <Input value={props.value} onChange={props.onChange} data={{fontSize: 18}} type={props.data.type}/>
+            <Input value={props.value} placeholder={props.placeholder} onChange={props.onChange} data={{fontSize: 18, ...props.style}} type={props.data.type}/>
         </div>
     )
 }
