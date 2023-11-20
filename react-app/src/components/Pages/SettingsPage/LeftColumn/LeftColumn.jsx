@@ -1,7 +1,6 @@
 import classes from "./LeftColumn.module.css"
 import profile_photo from "../../../../img/profile_photo.png"
 import DefaultButton from "../../../Button/DefaultButton"
-import MessageButton from "../../../Button/MessageButton"
 
 const LeftColumn = (props) => {
 

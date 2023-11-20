@@ -1,4 +1,3 @@
-import {useState} from "react"
 import Message from "../../Message/Message"
 import classes from "./Messages.module.css"
 import messageClasses from "../../Message/Message.module.css"
