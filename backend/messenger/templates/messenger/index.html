@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> {{ title }} </title>
+</head>
+<body>
+    {% for item in users%}
+        <div>
+            <p>{{ item.login }}</p>
+            <p>{{ item.firstName }} {{ item.lastName }}</p>
+        </div>
+        <hr/>
+    {% endfor %}
+</body>
+</html>
