@@ -1,0 +1,13 @@
+Create project:
+django-admin startproject project-name
+
+Run server:
+python3 manage.py runserver
+
+Create app:
+python3 manage.py startapp app-name
+
+Migration:
+python3 manage.py makemigrations
+python3 manage.py sqlmigrate app-name 0001
+python3 manage.py migrate
