@@ -17,4 +17,8 @@
 
 ## UI приложения
 
-![webapp.gif](..%2F..%2FDownloads%2Fwebapp.gif)
+![webapp.gif](samples/webapp.gif)
+
+## TODO
+
+Добавить поддержку авторизации пользователя по номеру телефона.
