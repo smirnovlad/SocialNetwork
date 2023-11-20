@@ -8,28 +8,28 @@ class Users(models.Model):
     lastName = models.CharField(max_length=30)
     bornAt = models.DateField()
     homeTown = models.CharField(max_length=30)
-    avatarUrl = models.URLField(max_length=200)
+    avatar = models.ImageField(upload_to="uploads/avatars/", blank=True)
 
     def __str__(self):
         return f"Login: {self.login}, first name: {self.firstName}, last name: {self.lastName}"
 
 class Friends(models.Model):
-    firstUserId = models.IntegerField()
-    secondUserId = models.IntegerField()
+    firstUser = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="first_user")
+    secondUser = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="second_user")
 
 class Messages(models.Model):
-    senderId = models.IntegerField()
-    receiverId = models.IntegerField()
+    sender = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="sender")
+    receiver = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="receiver")
     message = models.CharField(max_length=10000)
     timestamp = models.DateTimeField(auto_created=True)
 
     def __str__(self):
-        return f"Sender id: {self.senderId}, receiver id: {self.receiverId}, message: {self.message}"
+        return f"Sender login: {self.sender.login}, receiver login: {self.receiver.login}, message: {self.message}"
 
 class Feedback(models.Model):
-    senderId = models.IntegerField()
+    sender = models.ForeignKey(Users, on_delete=models.CASCADE)
     message = models.CharField(max_length=10000)
     timestamp = models.DateTimeField(auto_created=True)
 
     def __str__(self):
-        return f"Sender id: {self.senderId}, message: {self.message}"
+        return f"Sender login: {self.sender.login}, message: {self.message}"
