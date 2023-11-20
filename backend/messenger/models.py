@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Users(models.Model):
+class User(models.Model):
     login = models.CharField(max_length=15)
     password = models.CharField(max_length=50)
     firstName = models.CharField(max_length=30)
@@ -14,12 +14,12 @@ class Users(models.Model):
         return f"Login: {self.login}, first name: {self.firstName}, last name: {self.lastName}"
 
 class Friends(models.Model):
-    firstUser = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="first_user")
-    secondUser = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="second_user")
+    firstUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="first_user")
+    secondUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="second_user")
 
-class Messages(models.Model):
-    sender = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="sender")
-    receiver = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="receiver")
+class Message(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sender")
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="receiver")
     message = models.CharField(max_length=10000)
     timestamp = models.DateTimeField(auto_created=True)
 
@@ -27,7 +27,7 @@ class Messages(models.Model):
         return f"Sender login: {self.sender.login}, receiver login: {self.receiver.login}, message: {self.message}"
 
 class Feedback(models.Model):
-    sender = models.ForeignKey(Users, on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.CharField(max_length=10000)
     timestamp = models.DateTimeField(auto_created=True)
 
