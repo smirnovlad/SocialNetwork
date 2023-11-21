@@ -4,12 +4,8 @@ import string
 from .models import  User, Friends, Message, Feedback
 from django.db import connection
 from random_username.generate import generate_username
-from .serializers import encode, decode
 
 def generate():
-    decode()
-    return
-
     user1 = User(login=generate_username()[0], password="qwerty123", firstName="Vlad", lastName="Smirnov",
                  bornAt=datetime.date(2000, 5, 9), homeTown="Moscow")
     print(f"user id: {user1.id}, {user1}")

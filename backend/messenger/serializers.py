@@ -14,15 +14,11 @@ class UserModel:
 class UserSerializer(serializers.Serializer):
     login = serializers.CharField(max_length=30)
     password = serializers.CharField(max_length=30)
+    firstName = serializers.CharField(max_length=30)
+    lastName = serializers.CharField(max_length=30)
+    bornAt = serializers.DateField(read_only=True)
+    homeTown = serializers.CharField(max_length=30)
 
-def encode():
-    model = UserModel(login='programmer', password='thorup')
-    modelSer = UserSerializer(model)
-    json = JSONRenderer().render(modelSer.data)
-
-def decode():
-    stream = io.BytesIO(b'{"login": "some_login", "password": "easy_pass"}')
-    data = JSONParser().parse(stream)
-    serializer = UserSerializer(data=data)
-    serializer.is_valid(raise_exception=True)
-    print(serializer.validated_data)
+class FriendsSerializer(serializers.Serializer):
+    firstUser = serializers.IntegerField()
+    secondUser = serializers.IntegerField()

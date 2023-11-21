@@ -12,10 +12,8 @@ from rest_framework.response import Response
 
 class MessengerAPIViews(APIView):
     def get(self, request):
-        generate()
         all = User.objects.all()
-        values = all.values()
-        return Response({'Data': [values]})
+        return Response({'get': UserSerializer(all, many=True).data})
 
     def post(self, request):
         created = User.objects.create(
@@ -26,4 +24,4 @@ class MessengerAPIViews(APIView):
             bornAt=request.data['bornAt'],
             homeTown=request.data['homeTown'],
         )
-        return Response({'post': model_to_dict(created, exclude=['avatar'])})
+        return Response({'post': UserSerializer(created).data})
