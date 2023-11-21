@@ -12,6 +12,7 @@ from rest_framework.response import Response
 
 class MessengerAPIViews(APIView):
     def get(self, request):
+        generate()
         all = User.objects.all()
         values = all.values()
         return Response({'Data': [values]})
