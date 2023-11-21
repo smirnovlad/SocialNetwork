@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class User(models.Model):
     login = models.CharField(max_length=15, unique=True)
@@ -13,9 +14,11 @@ class User(models.Model):
     def __str__(self):
         return f"Login: {self.login}, first name: {self.firstName}, last name: {self.lastName}"
 
+
 class Friends(models.Model):
     firstUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="first_user")
     secondUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="second_user")
+
 
 class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sender")
@@ -26,10 +29,11 @@ class Message(models.Model):
     def __str__(self):
         return f"Sender login: {self.sender.login}, receiver login: {self.receiver.login}, message: {self.message}"
 
+
 class Feedback(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.CharField(max_length=10000)
-    timestamp = models.DateTimeField(auto_created=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Sender login: {self.sender.login}, message: {self.message}"
