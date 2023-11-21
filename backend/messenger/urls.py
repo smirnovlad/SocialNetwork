@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import UserAPIViews
+from .views import UserListAPIViews, UserUpdateAPIViews
 
 urlpatterns = [
-    path('api/v1/userlist/', UserAPIViews.as_view()),
-    path('api/v1/userlist/<int:pk>', UserAPIViews.as_view()),
+    path('api/v1/userlist/', UserListAPIViews.as_view()),
+    path('api/v1/userupdate/<int:pk>', UserUpdateAPIViews.as_view()),
 ]
