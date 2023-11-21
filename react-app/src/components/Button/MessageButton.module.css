@@ -1,0 +1,10 @@
+.MessageButton {
+    background-color: #EBF2FA;
+    border-radius: 10px;
+    border-width: 0;
+    height: 25px;
+}
+
+.MessageButton:hover {
+    border-width: 2px;
+}

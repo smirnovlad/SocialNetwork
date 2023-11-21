@@ -1,0 +1,10 @@
+.BaseForm {
+    display: inline-block;
+    background-color: white;
+    border-radius: 25px;
+    padding: 30px 37px;
+    float: right;
+    top: 50%;
+    position: absolute;
+    transform: translate(100%, -50%);
+}

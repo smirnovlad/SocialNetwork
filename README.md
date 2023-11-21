@@ -14,3 +14,7 @@
 ## Макет веб-приложения
 
 [Design in Figma](https://www.figma.com/file/hlFAIfFrGb8HHlGH0B2Uy7/HuaoMao?type=design&node-id=0-1&mode=design&t=LrnYanTZAVLeXxYG-0)
+
+## UI приложения
+
+![webapp.gif](..%2F..%2FDownloads%2Fwebapp.gif)

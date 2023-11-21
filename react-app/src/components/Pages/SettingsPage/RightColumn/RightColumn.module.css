@@ -1,0 +1,8 @@
+.RightColumn {
+    width: 60%;
+    height: 100%;
+    min-height: 400px;
+    float: right;
+    position: relative;
+    /*background-color: darkred;*/
+}
