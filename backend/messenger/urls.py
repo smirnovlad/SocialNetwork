@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import index
+from .views import MessengerAPIViews
 
 urlpatterns = [
-    path('welcome/', index),
+    path('api/v1/userlist/', MessengerAPIViews.as_view()),
 ]
