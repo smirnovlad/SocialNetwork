@@ -10,18 +10,42 @@ from rest_framework.response import Response
 
 # Create your views here.
 
-class MessengerAPIViews(APIView):
+class UserAPIViews(APIView):
     def get(self, request):
         all = User.objects.all()
         return Response({'get': UserSerializer(all, many=True).data})
 
     def post(self, request):
-        created = User.objects.create(
-            login=request.data['login'],
-            password=request.data['password'],
-            firstName=request.data['firstName'],
-            lastName=request.data['lastName'],
-            bornAt=request.data['bornAt'],
-            homeTown=request.data['homeTown'],
-        )
-        return Response({'post': UserSerializer(created).data})
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response({'post': serializer.data})
+
+    def put(self, request, *args, **kwargs):
+        pk = kwargs.get("pk", None)
+        if not pk:
+            return Response({"error": "Method put is not allowed"})
+
+        try:
+            instance = User.objects.get(pk=pk)
+        except:
+            return Response({"error": "Object is not exist"})
+
+        serializer = UserSerializer(data=request.data, instance=instance)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'put': serializer.data})
+
+    def delete(self, request, *args, **kwargs):
+        pk = kwargs.get("pk", None)
+        if not pk:
+            return Response({"error": "Method put is not allowed"})
+
+        try:
+            instance = User.objects.get(pk=pk)
+        except:
+            return Response({"error": "Object is not exist"})
+
+        instance.delete()
+        return Response({'delete': "deleted object " + str(pk)})
