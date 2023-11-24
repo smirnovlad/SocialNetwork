@@ -1,7 +1,7 @@
 import datetime
 import random
 import string
-from .models import  User, Friends, Message, Feedback
+from .models import  User, Friends, Message, Feedback, Chat
 from django.db import connection
 from random_username.generate import generate_username
 
@@ -23,6 +23,8 @@ def generate():
     print(friends)
     friends.save()
 
+    chat = Chat.objects.create(firstUser=user1, secondUser=user2)
+
     message = ''.join(random.choices(string.ascii_uppercase, k=20))
-    Message.objects.create(sender=user2, receiver=user1, message=message)
+    Message.objects.create(chat=chat, sender=user2, receiver=user1, text=message)
     print(connection.queries)
