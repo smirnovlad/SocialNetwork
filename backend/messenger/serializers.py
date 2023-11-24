@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Friends, Message, Feedback
+from .models import User, Friends, Message, Feedback, Chat
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -19,6 +19,11 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Message
         fields = '__all__'
 
+
+class ChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = '__all__'
 
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
