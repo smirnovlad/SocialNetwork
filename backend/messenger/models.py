@@ -16,18 +16,23 @@ class User(models.Model):
 
 
 class Friends(models.Model):
-    firstUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="first_user")
-    secondUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="second_user")
+    firstUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friends_first_user")
+    secondUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friends_second_user")
+
+class Chat(models.Model):
+    firstUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="chat_first_user")
+    secondUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="chat_second_user")
 
 
 class Message(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sender")
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="receiver")
-    message = models.CharField(max_length=10000)
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="message_chat")
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_sender")
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_receiver")
+    text = models.CharField(max_length=10000)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Sender login: {self.sender.login}, receiver login: {self.receiver.login}, message: {self.message}"
+        return f"Sender login: {self.sender.login}, receiver login: {self.receiver.login}, message: {self.text}"
 
 
 class Feedback(models.Model):
