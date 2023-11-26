@@ -1,12 +1,9 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class User(models.Model):
-    login = models.CharField(max_length=15, unique=True)
+class User(AbstractUser):
     password = models.CharField(max_length=50)
-    firstName = models.CharField(max_length=30)
-    lastName = models.CharField(max_length=30)
     bornAt = models.DateField()
     homeTown = models.CharField(max_length=30)
     avatar = models.ImageField(upload_to="uploads/avatars/", blank=True)
@@ -18,7 +15,7 @@ class User(models.Model):
         return list(self.friends.all())
 
     def __str__(self):
-        return f"Login: {self.login}, first name: {self.firstName}, last name: {self.lastName}"
+        return f"Username: {self.username}, first name: {self.first_name}, last name: {self.last_name}"
 
 
 class Chat(models.Model):

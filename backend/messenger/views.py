@@ -12,6 +12,7 @@ class CustomAPIViews(mixins.ListModelMixin,
                      mixins.CreateModelMixin,
                      generics.RetrieveUpdateDestroyAPIView):
     def get(self, request, *args, **kwargs):
+        generate()
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
