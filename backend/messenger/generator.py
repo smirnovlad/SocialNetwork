@@ -7,13 +7,13 @@ from random_username.generate import generate_username
 
 
 def generate():
-    user1 = User(login=generate_username()[0], password="qwerty123", firstName="Vlad", lastName="Smirnov",
+    user1 = User(username=generate_username()[0], password="qwerty123", first_name="Vlad", last_name="Smirnov",
                  bornAt=datetime.date(2000, 5, 9), homeTown="Moscow")
     print(f"user id: {user1.id}, {user1}")
     user1.save()
     print(f"user id: {user1.id}")
 
-    user2 = User(login=generate_username()[0], password="password", firstName="Alexander", lastName="Ivanov",
+    user2 = User(username=generate_username()[0], password="password", first_name="Alexander", last_name="Ivanov",
                  bornAt=datetime.date(2001, 3, 8), homeTown="Moscow")
     print(f"user id: {user2.id}, {user2}")
     user2.save()
