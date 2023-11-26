@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
-    password = models.CharField(max_length=50)
     bornAt = models.DateField()
     homeTown = models.CharField(max_length=30)
     avatar = models.ImageField(upload_to="uploads/avatars/", blank=True)
