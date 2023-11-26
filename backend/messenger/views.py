@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .generator import generate
 from rest_framework import generics, mixins
-from .models import User, Friends, Message, Feedback, Chat
-from .serializers import UserSerializer, FriendsSerializer, MessageSerializer, FeedbackSerializer, ChatSerializer
+from .models import User, Message, Feedback, Chat
+from .serializers import UserSerializer, MessageSerializer, FeedbackSerializer, ChatSerializer
 
 
 # Create your views here.
@@ -23,18 +23,15 @@ class UserAPIViews(CustomAPIViews):
     serializer_class = UserSerializer
 
 
-class FriendsAPIViews(CustomAPIViews):
-    queryset = Friends.objects.all()
-    serializer_class = FriendsSerializer
-
-
 class MessageAPIViews(CustomAPIViews):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
 
+
 class ChatAPIViews(CustomAPIViews):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
+
 
 class FeedbackAPIViews(CustomAPIViews):
     queryset = Feedback.objects.all()

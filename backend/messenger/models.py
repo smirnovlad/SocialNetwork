@@ -10,14 +10,16 @@ class User(models.Model):
     bornAt = models.DateField()
     homeTown = models.CharField(max_length=30)
     avatar = models.ImageField(upload_to="uploads/avatars/", blank=True)
+    friends = models.ManyToManyField("self", symmetrical=False)
+
+    @property
+    def friendlist(self):
+        # Watch for large querysets: it loads everything in memory
+        return list(self.friends.all())
 
     def __str__(self):
         return f"Login: {self.login}, first name: {self.firstName}, last name: {self.lastName}"
 
-
-class Friends(models.Model):
-    firstUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friends_first_user")
-    secondUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friends_second_user")
 
 class Chat(models.Model):
     firstUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="chat_first_user")
