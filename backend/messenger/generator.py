@@ -1,9 +1,10 @@
 import datetime
 import random
 import string
-from .models import  User, Friends, Message, Feedback, Chat
+from .models import User, Message, Feedback, Chat
 from django.db import connection
 from random_username.generate import generate_username
+
 
 def generate():
     user1 = User(login=generate_username()[0], password="qwerty123", firstName="Vlad", lastName="Smirnov",
@@ -18,10 +19,6 @@ def generate():
     user2.save()
     print(f"user id: {user2.id}")
     print(connection.queries)
-
-    friends = Friends(firstUser=user1, secondUser=user2)
-    print(friends)
-    friends.save()
 
     chat = Chat.objects.create(firstUser=user1, secondUser=user2)
 
