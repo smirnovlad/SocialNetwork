@@ -1,16 +1,16 @@
 import BaseForm from "../../BaseForm/BaseForm"
 import {useState} from "react"
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const AuthorizationForm = (props) => {
     const [login, setLogin] = useState("")
     const [password, setPassword] = useState("")
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const authorizationData = [
-        { text: "Username", onChange: setLogin, type: "text", value: login},
-        { text: "Password", onChange: setPassword, type: "password", value: password},
+        {text: "Username", onChange: setLogin, type: "text", value: login},
+        {text: "Password", onChange: setPassword, type: "password", value: password},
     ]
 
     const onLogInClicked = () => {

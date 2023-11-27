@@ -19,25 +19,34 @@ const Messages = () => {
     return (
         <div>
             <div>
-                <text style={{fontSize: 36}}> Messages </text>
+                <text style={{fontSize: 36}}> Messages</text>
             </div>
             <br/>
-            <input placeholder={"Search chats"} style={{width: "70%", borderRadius: 10, height: 35, textIndent: 10, fontSize: 24,}}/>
+            <input placeholder={"Search chats"}
+                   style={{width: "70%", borderRadius: 10, height: 35, textIndent: 10, fontSize: 24,}}/>
             <div style={{height: 21}}></div>
-            <div style={{width: "92.5%", height: "70%", position: "absolute", borderStyle: "solid", borderWidth: 1, borderRadius: 25, overflow: "hidden"}}>
+            <div style={{
+                width: "92.5%",
+                height: "70%",
+                position: "absolute",
+                borderStyle: "solid",
+                borderWidth: 1,
+                borderRadius: 25,
+                overflow: "hidden"
+            }}>
                 <div style={{borderRadius: 25, position: "absolute"}} className={classes.CustomizedScrollbar}>
                     <div style={{width: "100%", position: "absolute"}}>
                         {
-                        chats.map((chat) =>
-                            <div>
-                                <hr style={{width: "100%"}}/>
-                                <a href={chat.username} style={{textDecoration: "none", color: "black"}}>
-                                    <div className={messageClasses.ClickableMessage} >
-                                        <Message data={chat}/>
-                                    </div>
-                                </a>
-                            </div>
-                        )
+                            chats.map((chat) =>
+                                <div>
+                                    <hr style={{width: "100%"}}/>
+                                    <a href={chat.username} style={{textDecoration: "none", color: "black"}}>
+                                        <div className={messageClasses.ClickableMessage}>
+                                            <Message data={chat}/>
+                                        </div>
+                                    </a>
+                                </div>
+                            )
                         }
                     </div>
                 </div>

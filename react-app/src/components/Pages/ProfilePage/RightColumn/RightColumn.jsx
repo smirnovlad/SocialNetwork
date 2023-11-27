@@ -17,14 +17,14 @@ const RightColumn = () => {
         <div className={classes.RightColumn}>
             <h2 style={{marginLeft: "10%"}}> {userName} </h2>
             <hr style={{marginLeft: "10%"}}/>
-             { datas.map((data) =>
+            {datas.map((data) =>
                 <div>
                     <div style={{height: 5}}></div>
                     <text
                         style={textStyle}>
                         {data.text} {data.value}
                     </text>
-                </div>) }
+                </div>)}
         </div>
     )
 }

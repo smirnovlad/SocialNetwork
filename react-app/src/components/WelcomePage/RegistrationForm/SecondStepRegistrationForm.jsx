@@ -7,9 +7,9 @@ const SecondStepRegistrationForm = (props) => {
     const [confirmPassword, setConfirmPassword] = useState("")
 
     const SecondStepData = [
-        { text: "Username", onChange: setLogin, type: "text", value: login},
-        { text: "Password", onChange: setPassword, type: "password", value: password},
-        { text: "Confirm password", onChange: setConfirmPassword, type: "password", value: confirmPassword},
+        {text: "Username", onChange: setLogin, type: "text", value: login},
+        {text: "Password", onChange: setPassword, type: "password", value: password},
+        {text: "Confirm password", onChange: setConfirmPassword, type: "password", value: confirmPassword},
     ]
 
     const onGoBackClicked = () => {

@@ -8,10 +8,10 @@ const FirstStepRegistrationForm = (props) => {
     const [homeTown, setHomeTown] = useState(Object.keys(props.data).length ? props.data["homeTown"] : "")
 
     const firstStepData = [
-        { text: "First name", onChange: setFirstName, type: "text", value: firstName},
-        { text: "Last name", onChange: setLastName, type: "text", value: lastName},
-        { text: "Age", onChange: setAge, type: "text", value: age},
-        { text: "Hometown", onChange: setHomeTown, type: "text", value: homeTown},
+        {text: "First name", onChange: setFirstName, type: "text", value: firstName},
+        {text: "Last name", onChange: setLastName, type: "text", value: lastName},
+        {text: "Age", onChange: setAge, type: "text", value: age},
+        {text: "Hometown", onChange: setHomeTown, type: "text", value: homeTown},
     ]
 
     const onGoBackClicked = () => {

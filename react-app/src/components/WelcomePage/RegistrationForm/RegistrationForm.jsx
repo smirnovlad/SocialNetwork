@@ -12,7 +12,8 @@ const RegistrationForm = (props) => {
 
     const onGoBackClickedFromSecond = () => {
         console.log("Go back is clicked from second");
-        setForm(<FirstStepRegistrationForm data={firstStepData} onGoBackClicked={onGoBackClickedFromFirst} onGoNextClicked={onGoNextClicked} id={"FirstStepRegistrationForm"}/>);
+        setForm(<FirstStepRegistrationForm data={firstStepData} onGoBackClicked={onGoBackClickedFromFirst}
+                                           onGoNextClicked={onGoNextClicked} id={"FirstStepRegistrationForm"}/>);
     }
 
     const onSignUpClicked = () => {
@@ -25,11 +26,14 @@ const RegistrationForm = (props) => {
         for (let key in data) {
             firstStepData[key] = data[key];
         }
-        setForm(<SecondStepRegistrationForm onGoBackClicked={onGoBackClickedFromSecond} onSignUpClicked={onSignUpClicked} id={"SecondStepRegistrationForm"}/>)
+        setForm(<SecondStepRegistrationForm onGoBackClicked={onGoBackClickedFromSecond}
+                                            onSignUpClicked={onSignUpClicked} id={"SecondStepRegistrationForm"}/>)
         console.log(firstStepData)
     }
 
-    const [form, setForm] = useState(<FirstStepRegistrationForm data={{}} onGoBackClicked={onGoBackClickedFromFirst} onGoNextClicked={onGoNextClicked} id={"FirstStepRegistrationForm"}/>)
+    const [form, setForm] = useState(<FirstStepRegistrationForm data={{}} onGoBackClicked={onGoBackClickedFromFirst}
+                                                                onGoNextClicked={onGoNextClicked}
+                                                                id={"FirstStepRegistrationForm"}/>)
 
     return (
         <div>
