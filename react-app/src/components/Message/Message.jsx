@@ -9,7 +9,7 @@ const Message = ({data}) => {
             <text style={{float: "right", color: "#818C99", paddingRight: "10px"}}>
                 {data.sentAt}
             </text>
-            <div style={{height: 5}}></div>
+            <div style={{height:5}}></div>
             <text>
                 {data.message}
             </text>

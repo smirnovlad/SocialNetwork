@@ -6,7 +6,7 @@ const MainContent = ({content}) => {
     return (
         <div className={classes.MainContent}>
             <LeftPanel/>
-            <div style={{width: "5%"}}></div>
+            <div style={{width: "5%"}}> </div>
             <Content content={content}/>
         </div>
     )

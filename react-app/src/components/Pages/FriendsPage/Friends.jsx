@@ -27,40 +27,24 @@ const Friends = () => {
     return (
         <div>
             <div>
-                <text style={{fontSize: 36}}> Friends</text>
+                <text style={{fontSize: 36}}> Friends </text>
             </div>
             <br/>
-            <input onChange={e => setSearchRequest(e.target.value)} placeholder={"Search users"}
-                   style={{width: "70%", borderRadius: 10, height: 35, textIndent: 10, fontSize: 24,}}/>
+            <input onChange={e => setSearchRequest(e.target.value)} placeholder={"Search users"} style={{width: "70%", borderRadius: 10, height: 35, textIndent: 10, fontSize: 24,}}/>
             <div style={{height: 21}}></div>
 
-            <div style={{
-                width: "80%",
-                height: "70%",
-                position: "absolute",
-                borderStyle: "solid",
-                borderWidth: 1,
-                borderRadius: 25,
-                overflow: "hidden"
-            }}>
+            <div style={{width: "80%", height: "70%", position: "absolute", borderStyle: "solid", borderWidth: 1, borderRadius: 25, overflow: "hidden"}}>
                 <div style={{borderRadius: 25, position: "absolute"}} className={classes.CustomizedScrollbar}>
                     <div style={{width: "100%", position: "absolute"}}>
                         {
-                            filtered.map((friend) =>
-                                <div>
-                                    <hr style={{width: "100%"}}/>
-                                    <div style={{height: 50, paddingLeft: 10}}>
-                                        <a href={friend.username} style={{
-                                            textDecoration: "none",
-                                            fontSize: 24,
-                                            fontWeight: "bold",
-                                            color: "#2A5885",
-                                            position: "relative",
-                                            top: "25%"
-                                        }}> {friend.name} </a>
-                                    </div>
+                        filtered.map((friend) =>
+                            <div>
+                                <hr style={{width: "100%"}}/>
+                                <div style={{height: 50, paddingLeft: 10}}>
+                                    <a href={friend.username} style={{textDecoration: "none", fontSize:24, fontWeight: "bold", color: "#2A5885", position: "relative", top: "25%"}}> {friend.name} </a>
                                 </div>
-                            )
+                            </div>
+                        )
                         }
                     </div>
                 </div>

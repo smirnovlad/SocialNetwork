@@ -12,25 +12,25 @@ const LeftPanel = (props) => {
     }
 
     const buttons = [
-        {text: "My profile", handler: props.onMyProfileClicked, link: "/profile"},
-        {text: "Friends", handler: props.onFriendsClicked, link: "/friends"},
-        {text: "Messages", handler: props.onMessagesClicked, link: "/messages"},
-        {text: "Settings", handler: props.onSettingsClicked, link: "/settings"},
-        {text: "Feedback", handler: props.onFeedbackClicked, link: "/feedback"},
-        {text: "Log out", handler: props.onLogOutClicked, link: "/login"},
+        { text: "My profile", handler: props.onMyProfileClicked, link: "/profile"},
+        { text: "Friends", handler: props.onFriendsClicked, link: "/friends"},
+        { text: "Messages", handler: props.onMessagesClicked, link: "/messages"},
+        { text: "Settings", handler: props.onSettingsClicked, link: "/settings"},
+        { text: "Feedback", handler: props.onFeedbackClicked, link: "/feedback"},
+        { text: "Log out", handler: props.onLogOutClicked, link: "/login"},
     ]
 
     return (
         <div className={classes.LeftPanel}>
-            {buttons.map((button) =>
+             { buttons.map((button) =>
                 <div>
                     <Link to={button.link}>
                         <DefaultButton
                             handler={button.handler}
                             text={button.text}
-                            style={buttonStyle}/>
+                            style={buttonStyle} />
                     </Link>
-                </div>)}
+                </div>) }
         </div>
     )
 }

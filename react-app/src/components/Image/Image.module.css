@@ -1,6 +1,6 @@
 .Image {
     width: fit-content;
-    display: inline-block;
+    display:inline-block;
     float: left;
     top: 50%;
     position: absolute;

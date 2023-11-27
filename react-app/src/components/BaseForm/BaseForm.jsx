@@ -5,14 +5,14 @@ import classes from "./BaseForm.module.css"
 const BaseForm = ({datas, buttons, id}) => {
     return (
         <div className={classes.BaseForm} id={id}>
-            {datas.map((data) =>
+            { datas.map((data) =>
                 <div>
                     <InputLine
                         onChange={e => data.onChange(e.target.value)}
                         value={data.value}
-                        data={{text: data.text, type: data.type}}/>
+                        data={{text: data.text, type: data.type}} />
                     <div style={{height: 3}}></div>
-                </div>)}
+                </div>) }
 
 
             <div style={{height: 7}}></div>
