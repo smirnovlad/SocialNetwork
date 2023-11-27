@@ -1,10 +1,13 @@
 import BaseForm from "../../BaseForm/BaseForm"
 import {useState} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {signUpSecondStep} from "../../../store/registrationDataSlice"
 
 const SecondStepRegistrationForm = (props) => {
-    const [login, setLogin] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
+    const registrationData = useSelector(state => state.registrationData)
+    const [login, setLogin] = useState(registrationData.username)
+    const [password, setPassword] = useState(registrationData.password)
+    const [confirmPassword, setConfirmPassword] = useState(registrationData.confirm_password)
 
     const SecondStepData = [
         {text: "Username", onChange: setLogin, type: "text", value: login},
@@ -12,12 +15,20 @@ const SecondStepRegistrationForm = (props) => {
         {text: "Confirm password", onChange: setConfirmPassword, type: "password", value: confirmPassword},
     ]
 
+    const dispatch = useDispatch()
+    const updateFirstStepData = () => dispatch(signUpSecondStep({
+        "login": login,
+        "password": password,
+        "confirm_password": confirmPassword
+    }))
+
     const onGoBackClicked = () => {
+        updateFirstStepData();
         props.onGoBackClicked();
     }
 
     const onSignUpClicked = () => {
-
+        updateFirstStepData();
     }
 
     return (

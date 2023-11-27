@@ -1,11 +1,14 @@
 import BaseForm from "../../BaseForm/BaseForm"
 import {useState} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {signUpFirstStep} from "../../../store/registrationDataSlice"
 
 const FirstStepRegistrationForm = (props) => {
-    const [firstName, setFirstName] = useState(Object.keys(props.data).length ? props.data["firstName"] : "")
-    const [lastName, setLastName] = useState(Object.keys(props.data).length ? props.data["lastName"] : "")
-    const [age, setAge] = useState(Object.keys(props.data).length ? props.data["age"] : "")
-    const [homeTown, setHomeTown] = useState(Object.keys(props.data).length ? props.data["homeTown"] : "")
+    const registrationData = useSelector(state => state.registrationData)
+    const [firstName, setFirstName] = useState(registrationData.first_name)
+    const [lastName, setLastName] = useState(registrationData.last_name)
+    const [age, setAge] = useState(registrationData.age)
+    const [homeTown, setHomeTown] = useState(registrationData.hometown)
 
     const firstStepData = [
         {text: "First name", onChange: setFirstName, type: "text", value: firstName},
@@ -14,14 +17,22 @@ const FirstStepRegistrationForm = (props) => {
         {text: "Hometown", onChange: setHomeTown, type: "text", value: homeTown},
     ]
 
+    const dispatch = useDispatch()
+    const updateFirstStepData = () => dispatch(signUpFirstStep({
+        "first_name": firstName,
+        "last_name": lastName,
+        "age": age,
+        "hometown": homeTown
+    }))
+
     const onGoBackClicked = () => {
-        props.onGoBackClicked()
+        updateFirstStepData();
+        props.onGoBackClicked();
     }
 
     const onGoNextClicked = () => {
-        props.onGoNextClicked(
-            {"firstName": firstName, "lastName": lastName, "age": age, "homeTown": homeTown}
-        );
+        updateFirstStepData();
+        props.onGoNextClicked();
     }
 
     return (
