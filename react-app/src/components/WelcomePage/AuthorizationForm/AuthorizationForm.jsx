@@ -1,10 +1,12 @@
 import BaseForm from "../../BaseForm/BaseForm"
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import {useNavigate} from "react-router-dom"
 import {useSelector, useDispatch} from "react-redux"
 import {logIn} from "../../../store/authorizationDataSlice"
+import {fetchData} from "../../../store/authorizationDataSlice"
 
 const AuthorizationForm = (props) => {
+    const dispatch = useDispatch()
     const authorizationData = useSelector(state => state.authorizationData)
     const [login, setLogin] = useState(authorizationData.username)
     const [password, setPassword] = useState(authorizationData.password)
@@ -16,11 +18,20 @@ const AuthorizationForm = (props) => {
         {text: "Password", onChange: setPassword, type: "password", value: password},
     ]
 
-    const dispatch = useDispatch()
     const updateData = () => dispatch(logIn({
         "login": login,
         "password": password
     }))
+
+    useEffect(() => {
+        dispatch(fetchData())
+    }, [dispatch]);
+
+    useEffect(() => {
+       setLogin(authorizationData.username)
+    },[authorizationData])
+
+    const {status, error} = useSelector(state => state.authorizationData)
 
     const onLogInClicked = () => {
         console.log("Log in clicked: ", {login});
@@ -35,12 +46,15 @@ const AuthorizationForm = (props) => {
     }
 
     return (
-        <BaseForm datas={data} buttons={{
-            firstText: "Log in",
-            secondText: "Sign up",
-            firstHandler: onLogInClicked,
-            secondHandler: onSignUpClicked,
-        }} id={"AuthorizationForm"}/>
+        <div>
+            <BaseForm datas={data} buttons={{
+                firstText: "Log in",
+                secondText: "Sign up",
+                firstHandler: onLogInClicked,
+                secondHandler: onSignUpClicked,
+            }} id={"AuthorizationForm"}/>
+            {status == 'failed' && <h2>Error data</h2>}
+        </div>
     )
 }
 
