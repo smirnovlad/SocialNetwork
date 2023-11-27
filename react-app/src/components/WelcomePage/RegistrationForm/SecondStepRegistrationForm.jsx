@@ -9,30 +9,30 @@ const SecondStepRegistrationForm = (props) => {
     const [password, setPassword] = useState(registrationData.password)
     const [confirmPassword, setConfirmPassword] = useState(registrationData.confirm_password)
 
-    const SecondStepData = [
+    const data = [
         {text: "Username", onChange: setLogin, type: "text", value: login},
         {text: "Password", onChange: setPassword, type: "password", value: password},
         {text: "Confirm password", onChange: setConfirmPassword, type: "password", value: confirmPassword},
     ]
 
     const dispatch = useDispatch()
-    const updateFirstStepData = () => dispatch(signUpSecondStep({
+    const updateData = () => dispatch(signUpSecondStep({
         "login": login,
         "password": password,
         "confirm_password": confirmPassword
     }))
 
     const onGoBackClicked = () => {
-        updateFirstStepData();
+        updateData();
         props.onGoBackClicked();
     }
 
     const onSignUpClicked = () => {
-        updateFirstStepData();
+        updateData();
     }
 
     return (
-        <BaseForm datas={SecondStepData} buttons={{
+        <BaseForm datas={data} buttons={{
             firstText: "Go back",
             secondText: "Sign up",
             firstHandler: onGoBackClicked,

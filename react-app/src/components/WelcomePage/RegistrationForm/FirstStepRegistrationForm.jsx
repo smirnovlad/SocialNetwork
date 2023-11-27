@@ -10,7 +10,7 @@ const FirstStepRegistrationForm = (props) => {
     const [age, setAge] = useState(registrationData.age)
     const [homeTown, setHomeTown] = useState(registrationData.hometown)
 
-    const firstStepData = [
+    const data = [
         {text: "First name", onChange: setFirstName, type: "text", value: firstName},
         {text: "Last name", onChange: setLastName, type: "text", value: lastName},
         {text: "Age", onChange: setAge, type: "text", value: age},
@@ -18,7 +18,7 @@ const FirstStepRegistrationForm = (props) => {
     ]
 
     const dispatch = useDispatch()
-    const updateFirstStepData = () => dispatch(signUpFirstStep({
+    const updateData = () => dispatch(signUpFirstStep({
         "first_name": firstName,
         "last_name": lastName,
         "age": age,
@@ -26,17 +26,17 @@ const FirstStepRegistrationForm = (props) => {
     }))
 
     const onGoBackClicked = () => {
-        updateFirstStepData();
+        updateData();
         props.onGoBackClicked();
     }
 
     const onGoNextClicked = () => {
-        updateFirstStepData();
+        updateData();
         props.onGoNextClicked();
     }
 
     return (
-        <BaseForm datas={firstStepData} buttons={{
+        <BaseForm datas={data} buttons={{
             firstText: "Go back",
             secondText: "Go next",
             firstHandler: onGoBackClicked,
