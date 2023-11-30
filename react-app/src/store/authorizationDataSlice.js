@@ -4,7 +4,7 @@ export const fetchData = createAsyncThunk(
     'items/fetchData',
     async function (_, {rejectWithValue}) {
         try {
-            const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+            const response = await fetch('http://127.0.0.1:8000/messenger/api/v1/users')
             if (!response.ok) {
                 throw new Error('Server is bad')
             }
