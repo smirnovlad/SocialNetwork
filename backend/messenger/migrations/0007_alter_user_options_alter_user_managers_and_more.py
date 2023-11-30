@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('auth', '0012_alter_user_first_name_max_length'),
-        ('messenger', '0005_user_friends_delete_friends'),
+        ('messenger', '0006_user_friends_delete_friends'),
     ]
 
     operations = [

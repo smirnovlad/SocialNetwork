@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('messenger', '0004_rename_message_message_text_alter_friends_firstuser_and_more'),
+        ('messenger', '0005_alter_feedback_timestamp'),
     ]
 
     operations = [
