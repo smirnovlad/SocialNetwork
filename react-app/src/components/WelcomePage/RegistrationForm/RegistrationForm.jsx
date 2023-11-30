@@ -3,8 +3,6 @@ import SecondStepRegistrationForm from "./SecondStepRegistrationForm"
 import {useState} from "react"
 
 const RegistrationForm = (props) => {
-    const firstStepData = {};
-    const secondStepData = {};
     const onGoBackClickedFromFirst = () => {
         console.log("Go back is clicked from first");
         props.onGoBackClicked();
@@ -12,24 +10,23 @@ const RegistrationForm = (props) => {
 
     const onGoBackClickedFromSecond = () => {
         console.log("Go back is clicked from second");
-        setForm(<FirstStepRegistrationForm data={firstStepData} onGoBackClicked={onGoBackClickedFromFirst} onGoNextClicked={onGoNextClicked} id={"FirstStepRegistrationForm"}/>);
+        setForm(<FirstStepRegistrationForm onGoBackClicked={onGoBackClickedFromFirst}
+                                           onGoNextClicked={onGoNextClicked} id={"FirstStepRegistrationForm"}/>);
     }
 
     const onSignUpClicked = () => {
         console.log("Sign up is clicked from second");
     }
 
-    const onGoNextClicked = (data) => {
+    const onGoNextClicked = () => {
         console.log("Go next is clicked from first");
-        console.log("Data: ", data)
-        for (let key in data) {
-            firstStepData[key] = data[key];
-        }
-        setForm(<SecondStepRegistrationForm onGoBackClicked={onGoBackClickedFromSecond} onSignUpClicked={onSignUpClicked} id={"SecondStepRegistrationForm"}/>)
-        console.log(firstStepData)
+        setForm(<SecondStepRegistrationForm onGoBackClicked={onGoBackClickedFromSecond}
+                                            onSignUpClicked={onSignUpClicked} id={"SecondStepRegistrationForm"}/>)
     }
 
-    const [form, setForm] = useState(<FirstStepRegistrationForm data={{}} onGoBackClicked={onGoBackClickedFromFirst} onGoNextClicked={onGoNextClicked} id={"FirstStepRegistrationForm"}/>)
+    const [form, setForm] = useState(<FirstStepRegistrationForm onGoBackClicked={onGoBackClickedFromFirst}
+                                                                onGoNextClicked={onGoNextClicked}
+                                                                id={"FirstStepRegistrationForm"}/>)
 
     return (
         <div>
