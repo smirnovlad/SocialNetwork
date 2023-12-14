@@ -1,26 +1,14 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-
-export const fetchData = createAsyncThunk(
-    'items/fetchData',
-    async function (_, {rejectWithValue}) {
-        try {
-            const response = await fetch('http://127.0.0.1:8000/messenger/api/v1/users')
-            if (!response.ok) {
-                throw new Error('Server is bad')
-            }
-            const data = await response.json()
-            return data
-        } catch (error) {
-            return rejectWithValue(error.message)
-        }
-    }
-)
+import {createSlice} from '@reduxjs/toolkit'
+import {authorize} from "../api/authorization"
 
 const authorizationDataSlice = createSlice({
     name: 'authorizationData',
     initialState: {
-        username: '',
-        password: '',
+        username: 'ewcfewfc',
+        password: 'privetergge',
+        // username: '',
+        // password: '',
+        token: null,
         status: null,
         error: null
     },
@@ -31,18 +19,21 @@ const authorizationDataSlice = createSlice({
         }
     },
     extraReducers: {
-        [fetchData.pending]: (state, action) => {
+        [authorize.pending]: (state, action) => {
             state.status = 'loading'
             state.error = null
         },
-        [fetchData.fulfilled]: (state, action) => {
+        [authorize.fulfilled]: (state, action) => {
             console.log(action.payload)
             state.status = 'resolved'
-            state.username = 'smirnov'
+            state.token = action.payload.auth_token
+            console.log("State token: ", state.token)
         },
-        [fetchData.rejected]: (state, action) => {
+        [authorize.rejected]: (state, action) => {
             state.status = 'failed'
             state.error = action.payload
+            state.token = null
+            console.log(state.error)
         }
     }
 })
