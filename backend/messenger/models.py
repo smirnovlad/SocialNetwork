@@ -6,7 +6,8 @@ class User(AbstractUser):
     bornAt = models.DateField()
     homeTown = models.CharField(max_length=30)
     avatar = models.ImageField(upload_to="uploads/avatars/", blank=True)
-    friends = models.ManyToManyField("self", symmetrical=False)
+    friends = models.ManyToManyField("self", symmetrical=False, blank=True)
+    REQUIRED_FIELDS = ['bornAt', 'homeTown']
 
     @property
     def friendlist(self):
