@@ -22,10 +22,10 @@ const RegistrationForm = (props) => {
         if (registrationData.password === registrationData.confirm_password) {
             dispatch(register(registrationData)).unwrap()
                 .then((originalPromiseResult) => {
-
+                    props.onRegistrationSuccess();
                 })
                 .catch((rejectedValueOrSerializedError) => {
-                    console.log(rejectedValueOrSerializedError)
+                    console.log(rejectedValueOrSerializedError);
                 })
         }
     }
