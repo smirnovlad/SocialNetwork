@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 
 export const authorize = createAsyncThunk (
-'items/authorize',
+'authorize',
     async function (data, {rejectWithValue}) {
         try {
             let {login, password} = data

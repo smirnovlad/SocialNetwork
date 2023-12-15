@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {fetchAuthorizedUserInfo} from "../api/userInfo"
+import {fetchAuthorizedUserInfo, updateUserSettings} from "../api/userInfo"
 import {authorize} from "../api/authorization"
 
 const authorizedUserInfoSlice = createSlice({
@@ -22,8 +22,6 @@ const authorizedUserInfoSlice = createSlice({
             state.error = null
         },
         [fetchAuthorizedUserInfo.fulfilled]: (state, action) => {
-            console.log("extraReducers, authorizedUser: fetchAuthorizedUserInfo.fulfilled")
-            console.log("id: ", state.id, ", new: ", action.payload.id)
             state.status = 'resolved'
             state.id = action.payload.id
             state.username = action.payload.username
@@ -39,7 +37,11 @@ const authorizedUserInfoSlice = createSlice({
         },
         [authorize.fulfilled]: (state, action) => {
             state.token = action.payload.auth_token
-        }
+        },
+        [updateUserSettings.fulfilled]: (state, action) => {
+            state.hometown = action.payload.homeTown
+            state.birth_date = action.payload.bornAt
+        },
     }
 })
 

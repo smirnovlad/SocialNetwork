@@ -19,7 +19,7 @@ class CustomInstanceAPIViews(mixins.CreateModelMixin,
 class UserInstanceAPIViews(CustomInstanceAPIViews):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class MessageInstanceAPIViews(CustomInstanceAPIViews):

@@ -4,10 +4,8 @@ import {authorize} from "../api/authorization"
 const authorizationDataSlice = createSlice({
     name: 'authorizationData',
     initialState: {
-        username: 'Vlad',
+        username: 'smirnovlad',
         password: 'privet123!',
-        // username: '',
-        // password: '',
         status: null,
         error: null
     },

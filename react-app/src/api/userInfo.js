@@ -2,10 +2,9 @@ import {createAsyncThunk} from '@reduxjs/toolkit'
 import store from '../store/store'
 
 export const fetchAuthorizedUserInfo = createAsyncThunk(
-    'items/fetchAuthorizedUserData',
+    'fetchAuthorizedUserData',
     async function (token, {rejectWithValue}) {
         try {
-            console.log("fetchAuthorizedUserInfo")
             let url = `http://127.0.0.1:8000/messenger/api/v1/auth/users/me`
             const response = await fetch(url, {
                 headers: {'Authorization': `Token ${token}`}
@@ -31,7 +30,7 @@ const fetchUserInfoHelper = async function(id) {
 }
 
 export const fetchUserInfo = createAsyncThunk(
-    'items/fetchUserData',
+    'fetchUserData',
     async function (id, {rejectWithValue}) {
         try {
             return await fetchUserInfoHelper(id)
@@ -53,3 +52,35 @@ export const fetchUserListInfo = async function (friends) {
     }
     return friendsInfo
 }
+
+export const updateUserSettings = createAsyncThunk(
+    'updateUserSettings',
+    async function (data, {rejectWithValue}) {
+        try {
+            console.log("UPDATE USER SETTINGS")
+            let {token, id, birthDate, hometown} = data;
+            let requestBody = {
+                bornAt: birthDate,
+                homeTown: hometown
+            }
+            console.log("request body: ", requestBody)
+            let url = `http://127.0.0.1:8000/messenger/api/v1/users/${id}`
+            const response = await fetch(url, {
+                method: 'PATCH',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Token ${token}`,
+                },
+                body: JSON.stringify(requestBody)
+            })
+            console.log("RESPONSE: ", response)
+            if (!response.ok) {
+                throw new Error('Error')
+            }
+            const res = await response.json()
+            return res
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }
+    }
+)

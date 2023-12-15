@@ -19,15 +19,13 @@ const RegistrationForm = (props) => {
 
     const onSignUpClicked = () => {
         const registrationData = store.getState().registrationData
-        if (registrationData.password === registrationData.confirm_password) {
-            dispatch(register(registrationData)).unwrap()
-                .then((originalPromiseResult) => {
-                    props.onRegistrationSuccess();
-                })
-                .catch((rejectedValueOrSerializedError) => {
-                    console.log(rejectedValueOrSerializedError);
-                })
-        }
+        dispatch(register(registrationData)).unwrap()
+            .then((originalPromiseResult) => {
+                props.onRegistrationSuccess();
+            })
+            .catch((rejectedValueOrSerializedError) => {
+                console.log(rejectedValueOrSerializedError);
+            })
     }
 
     const onGoNextClicked = () => {

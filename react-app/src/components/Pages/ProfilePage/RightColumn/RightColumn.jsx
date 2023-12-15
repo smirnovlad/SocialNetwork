@@ -6,7 +6,6 @@ import {useState, useEffect} from "react"
 import {useParams, useNavigate} from "react-router-dom"
 
 const RightColumn = ({...data}) => {
-    console.log("DATA: ", data.data)
     const [firstName, setFirstName] = useState(data.data.first_name)
     const [lastName, setLastName] = useState(data.data.last_name)
     const [hometown, setHometown] = useState(data.data.hometown)

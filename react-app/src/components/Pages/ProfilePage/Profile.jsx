@@ -17,10 +17,8 @@ const Profile = (userId) => {
 
     useEffect(() => {
         const userId = params.userid
-        // console.log("BEFORE: ", store.getState().currentProfileData)
         dispatch(fetchUserInfo(userId)).unwrap()
             .then((originalPromiseResult) => {
-                console.log("CURRENT PROFILE UPDATED: ", store.getState().currentProfileData)
                 setData(store.getState().currentProfileData)
             })
             .catch((rejectedValueOrSerializedError) => {

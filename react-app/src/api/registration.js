@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 
 export const register = createAsyncThunk (
-'items/register',
+'register',
     async function (data, {rejectWithValue}) {
         try {
             console.log("reg data: ", data)
