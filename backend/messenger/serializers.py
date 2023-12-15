@@ -5,7 +5,7 @@ from .models import User, Message, Feedback, Chat
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ('id', 'first_name', 'last_name', 'bornAt', 'homeTown', 'friends')
 
 
 class MessageSerializer(serializers.ModelSerializer):

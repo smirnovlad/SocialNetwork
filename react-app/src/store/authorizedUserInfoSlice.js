@@ -9,11 +9,10 @@ const authorizedUserInfoSlice = createSlice({
         username: '',
         first_name: '',
         last_name: '',
+        friends: [],
         birth_date: '',
         hometown: '',
         token: null,
-        status: null,
-        error: null
     },
     reducers: {
     },
@@ -23,11 +22,14 @@ const authorizedUserInfoSlice = createSlice({
             state.error = null
         },
         [fetchAuthorizedUserInfo.fulfilled]: (state, action) => {
+            console.log("extraReducers, authorizedUser: fetchAuthorizedUserInfo.fulfilled")
+            console.log("id: ", state.id, ", new: ", action.payload.id)
             state.status = 'resolved'
             state.id = action.payload.id
             state.username = action.payload.username
             state.first_name = action.payload.first_name
             state.last_name = action.payload.last_name
+            state.friends = action.payload.friends
             state.birth_date = action.payload.bornAt
             state.hometown = action.payload.homeTown
         },

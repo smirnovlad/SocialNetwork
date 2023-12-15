@@ -5,19 +5,23 @@ import {useState, useEffect} from "react"
 import {useDispatch} from "react-redux"
 import {useParams, useNavigate} from "react-router-dom"
 import {fetchUserInfo} from "../../../api/userInfo"
+import store from '../../../store/store'
 
-const Profile = () => {
+const Profile = (userId) => {
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const params = useParams();
 
     const [loading, setLoading] = useState(true);
+    const [data, setData] = useState()
 
     useEffect(() => {
         const userId = params.userid
-        console.log(userId)
+        // console.log("BEFORE: ", store.getState().currentProfileData)
         dispatch(fetchUserInfo(userId)).unwrap()
             .then((originalPromiseResult) => {
+                console.log("CURRENT PROFILE UPDATED: ", store.getState().currentProfileData)
+                setData(store.getState().currentProfileData)
             })
             .catch((rejectedValueOrSerializedError) => {
                 navigate("/login")
@@ -25,7 +29,7 @@ const Profile = () => {
             }).finally(() => {
                 setLoading(false)
             })
-    }, [dispatch]);
+    }, [dispatch, params.userid]);
 
     // TODO: handle case if userId is not exist
     if (loading) return (
@@ -35,7 +39,7 @@ const Profile = () => {
     return (
         <div className={classes.Profile}>
             <LeftColumn/>
-            <RightColumn/>
+            <RightColumn data={data}/>
         </div>
     )
 }
