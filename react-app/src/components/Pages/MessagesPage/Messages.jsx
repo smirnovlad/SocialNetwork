@@ -1,6 +1,7 @@
 import Message from "../../Message/Message"
 import classes from "./Messages.module.css"
 import messageClasses from "../../Message/Message.module.css"
+import {Text} from 'react-native'
 
 const Messages = () => {
     const chats = [
@@ -19,7 +20,7 @@ const Messages = () => {
     return (
         <div>
             <div>
-                <text style={{fontSize: 36}}> Messages </text>
+                <Text style={{fontSize: 36}}> Messages </Text>
             </div>
             <br/>
             <input placeholder={"Search chats"} style={{width: "70%", borderRadius: 10, height: 35, textIndent: 10, fontSize: 24,}}/>
@@ -28,8 +29,8 @@ const Messages = () => {
                 <div style={{borderRadius: 25, position: "absolute"}} className={classes.CustomizedScrollbar}>
                     <div style={{width: "100%", position: "absolute"}}>
                         {
-                        chats.map((chat) =>
-                            <div>
+                        chats.map((chat, index) =>
+                            <div key={index}>
                                 <hr style={{width: "100%"}}/>
                                 <a href={chat.username} style={{textDecoration: "none", color: "black"}}>
                                     <div className={messageClasses.ClickableMessage} >

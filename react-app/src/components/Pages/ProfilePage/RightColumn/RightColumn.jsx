@@ -1,4 +1,5 @@
 import classes from "./RightColumn.module.css"
+import {Text} from 'react-native'
 
 const RightColumn = () => {
     const userName = "Vlad Smirnov";
@@ -17,13 +18,13 @@ const RightColumn = () => {
         <div className={classes.RightColumn}>
             <h2 style={{marginLeft: "10%"}}> {userName} </h2>
             <hr style={{marginLeft: "10%"}}/>
-             { datas.map((data) =>
-                <div>
+             { datas.map((data, index) =>
+                <div key={index}>
                     <div style={{height: 5}}></div>
-                    <text
+                    <Text
                         style={textStyle}>
                         {data.text} {data.value}
-                    </text>
+                    </Text>
                 </div>) }
         </div>
     )

@@ -5,8 +5,8 @@ import classes from "./BaseForm.module.css"
 const BaseForm = ({datas, buttons, id}) => {
     return (
         <div className={classes.BaseForm} id={id}>
-            { datas.map((data) =>
-                <div>
+            { datas.map((data, index) =>
+                <div key={index}>
                     <InputLine
                         onChange={e => data.onChange(e.target.value)}
                         value={data.value}

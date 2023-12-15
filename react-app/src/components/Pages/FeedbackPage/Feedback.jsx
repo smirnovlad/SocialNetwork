@@ -1,6 +1,7 @@
 import DefaultButton from "../../Button/DefaultButton"
 import Message from "../../Message/Message"
 import classes from "./Feedback.module.css"
+import {Text} from 'react-native'
 
 const Feedback = (props) => {
     const datas = [
@@ -20,7 +21,7 @@ const Feedback = (props) => {
 
     return (
         <div style={{textAlign: "center"}}>
-            <text style={{fontSize: 36, position: "relative"}}> Early feedback </text>
+            <Text style={{fontSize: 36, position: "relative"}}> Early feedback </Text>
 
             <div style={{height: 10}}></div>
 
@@ -28,8 +29,8 @@ const Feedback = (props) => {
                 <div style={{borderRadius: 25, position: "absolute"}} className={classes.CustomizedScrollbar} >
                     <div style={{width: "100%", position: "absolute"}}>
                         {
-                        datas.map((feedback) =>
-                        <div style={{textAlign: "left", paddingLeft: 15, paddingRight: 5, height: 50}}>
+                        datas.map((feedback, index) =>
+                        <div key={index} style={{textAlign: "left", paddingLeft: 15, paddingRight: 5, height: 50}}>
                             <Message data={feedback}/>
                         </div>
                         )

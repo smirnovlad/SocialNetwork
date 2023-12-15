@@ -5,8 +5,8 @@ import RightColumn from "./RightColumn/RightColumn"
 const Settings = () => {
     return (
         <div className={classes.Settings}>
-            <LeftColumn/>
-            <RightColumn/>
+            <LeftColumn id={"SettingsLeftColumn"}/>
+            <RightColumn id={"SettingsRightColumn"}/>
         </div>
     )
 }

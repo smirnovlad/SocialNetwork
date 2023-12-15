@@ -1,6 +1,7 @@
 import classes from "./RightColumn.module.css"
 import InputLine from "../../../InputLine/InputLine"
 import DefaultButton from "../../../Button/DefaultButton"
+import {Text} from 'react-native'
 
 const RightColumn = (props) => {
     const userName = "Vlad Smirnov";
@@ -18,19 +19,19 @@ const RightColumn = (props) => {
     ]
 
     return (
-        <div className={classes.RightColumn}>
+        <div className={classes.RightColumn} id={props.id}>
             <h2 style={{marginLeft: "10%"}}> {userName} </h2>
             <hr style={{marginLeft: "10%"}}/>
-            { immutableDatas.map((data) =>
-                <div>
+            { immutableDatas.map((data, index) =>
+                <div key={index}>
                     <div style={{height: 5}}></div>
-                    <text
-                        style={textStyle}>
+                    <Text
+                        style={textStyle}>text
                         {data.text} {data.value}
-                    </text>
+                    </Text>
                 </div>) }
-             { mutableDatas.map((data) =>
-                <div style={{marginLeft: "10%"}}>
+             { mutableDatas.map((data, index) =>
+                <div key={index} style={{marginLeft: "10%"}}>
                     <div style={{height: 5}}></div>
                     <InputLine data={{text: data.text}} style={{width: "70%"}} placeholder={data.value}/>
                 </div>) }

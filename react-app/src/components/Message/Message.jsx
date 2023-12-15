@@ -1,18 +1,18 @@
 import classes from "./Message.module.css"
-
+import {Text} from 'react-native'
 const Message = ({data}) => {
     return (
         <div className={classes.Message}>
             <a href={data.username} style={{fontWeight: "bold", textDecoration: "none", color: "black"}}>
                 {data.name}
             </a>
-            <text style={{float: "right", color: "#818C99", paddingRight: "10px"}}>
+            <Text style={{float: "right", color: "#818C99", paddingRight: "10px"}}>
                 {data.sentAt}
-            </text>
+            </Text>
             <div style={{height:5}}></div>
-            <text>
+            <Text>
                 {data.message}
-            </text>
+            </Text>
         </div>
     )
 }

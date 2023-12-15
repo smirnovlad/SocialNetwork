@@ -22,8 +22,8 @@ const LeftPanel = (props) => {
 
     return (
         <div className={classes.LeftPanel}>
-             { buttons.map((button) =>
-                <div>
+             { buttons.map((button, index) =>
+                <div key={index}>
                     <Link to={button.link}>
                         <DefaultButton
                             handler={button.handler}

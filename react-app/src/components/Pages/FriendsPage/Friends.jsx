@@ -1,5 +1,6 @@
 import {useState} from "react"
 import classes from "./Friends.module.css"
+import {Text} from 'react-native'
 
 const Friends = () => {
     const [searchRequest, setSearchRequest] = useState("")
@@ -27,7 +28,7 @@ const Friends = () => {
     return (
         <div>
             <div>
-                <text style={{fontSize: 36}}> Friends </text>
+                <Text style={{fontSize: 36}}> Friends </Text>
             </div>
             <br/>
             <input onChange={e => setSearchRequest(e.target.value)} placeholder={"Search users"} style={{width: "70%", borderRadius: 10, height: 35, textIndent: 10, fontSize: 24,}}/>
@@ -37,8 +38,8 @@ const Friends = () => {
                 <div style={{borderRadius: 25, position: "absolute"}} className={classes.CustomizedScrollbar}>
                     <div style={{width: "100%", position: "absolute"}}>
                         {
-                        filtered.map((friend) =>
-                            <div>
+                        filtered.map((friend, index) =>
+                            <div key={index}>
                                 <hr style={{width: "100%"}}/>
                                 <div style={{height: 50, paddingLeft: 10}}>
                                     <a href={friend.username} style={{textDecoration: "none", fontSize:24, fontWeight: "bold", color: "#2A5885", position: "relative", top: "25%"}}> {friend.name} </a>

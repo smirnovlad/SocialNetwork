@@ -31,8 +31,8 @@ const Chat = ({data}, props) => {
                 <div style={{borderRadius: 25, position: "absolute"}} className={classes.CustomizedScrollbar} >
                     <div style={{width: "100%", position: "absolute"}}>
                         {
-                        messages.map((message) =>
-                        <div style={{textAlign: "left", paddingLeft: 15, paddingRight: 5, height: 50}}>
+                        messages.map((message, index) =>
+                        <div key={index} style={{textAlign: "left", paddingLeft: 15, paddingRight: 5, height: 50}}>
                             <Message data={message}/>
                         </div>
                         )
