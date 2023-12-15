@@ -27,7 +27,6 @@ const authorizationDataSlice = createSlice({
             console.log(action.payload)
             state.status = 'resolved'
             state.token = action.payload.auth_token
-            console.log("State token: ", state.token)
         },
         [authorize.rejected]: (state, action) => {
             state.status = 'failed'

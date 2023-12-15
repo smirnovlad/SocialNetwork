@@ -3,7 +3,6 @@ import {useState, useEffect} from "react"
 import {useNavigate} from "react-router-dom"
 import {useSelector, useDispatch, ReactReduxContext} from "react-redux"
 import {logIn} from "../../../store/authorizationDataSlice"
-import {fetchData} from "../../../api/userData"
 import {authorize} from "../../../api/authorization"
 
 const AuthorizationForm = (props) => {
@@ -27,7 +26,6 @@ const AuthorizationForm = (props) => {
     const {status, error, token} = useSelector(state => state.authorizationData)
 
     const onLogInClicked = async function () {
-        console.log("Log in clicked: ", {login});
         updateData();
         dispatch(authorize({login, password}, (error) => {
             console.log(error.message)
@@ -36,12 +34,11 @@ const AuthorizationForm = (props) => {
                 navigate("/profile");
             })
             .catch((rejectedValueOrSerializedError) => {
-                //
+                console.log(rejectedValueOrSerializedError)
             })
     }
 
     const onSignUpClicked = () => {
-        console.log("Sign up clicked");
         updateData();
         props.onSignUpClicked();
     }

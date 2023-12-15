@@ -1,25 +1,36 @@
 import FirstStepRegistrationForm from "./FirstStepRegistrationForm"
 import SecondStepRegistrationForm from "./SecondStepRegistrationForm"
-import {useState} from "react"
+import {useDispatch} from "react-redux"
+import {useState, useEffect} from "react"
+import store from '../../../store/store'
+import {register} from "../../../api/registration"
+
 
 const RegistrationForm = (props) => {
+    const dispatch = useDispatch()
     const onGoBackClickedFromFirst = () => {
-        console.log("Go back is clicked from first");
         props.onGoBackClicked();
     }
 
     const onGoBackClickedFromSecond = () => {
-        console.log("Go back is clicked from second");
         setForm(<FirstStepRegistrationForm onGoBackClicked={onGoBackClickedFromFirst}
                                            onGoNextClicked={onGoNextClicked} id={"FirstStepRegistrationForm"}/>);
     }
 
     const onSignUpClicked = () => {
-        console.log("Sign up is clicked from second");
+        const registrationData = store.getState().registrationData
+        if (registrationData.password === registrationData.confirm_password) {
+            dispatch(register(registrationData)).unwrap()
+                .then((originalPromiseResult) => {
+
+                })
+                .catch((rejectedValueOrSerializedError) => {
+                    console.log(rejectedValueOrSerializedError)
+                })
+        }
     }
 
     const onGoNextClicked = () => {
-        console.log("Go next is clicked from first");
         setForm(<SecondStepRegistrationForm onGoBackClicked={onGoBackClickedFromSecond}
                                             onSignUpClicked={onSignUpClicked} id={"SecondStepRegistrationForm"}/>)
     }

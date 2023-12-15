@@ -29,6 +29,7 @@ const SecondStepRegistrationForm = (props) => {
 
     const onSignUpClicked = () => {
         updateData();
+        props.onSignUpClicked();
     }
 
     return (

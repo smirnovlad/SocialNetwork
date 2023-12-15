@@ -5,7 +5,7 @@ const registrationDataSlice = createSlice({
     initialState: {
         first_name: '',
         last_name: '',
-        age: '',
+        birth_date: '',
         hometown: '',
         username: '',
         password: '',
@@ -13,22 +13,22 @@ const registrationDataSlice = createSlice({
     },
     reducers: {
         signUpFirstStep(state, action) {
-            console.log('state:', state)
-            console.log(action)
 
-            state.first_name = action.payload.first_name;
-            state.last_name = action.payload.last_name;
-            state.age = action.payload.age;
-            state.hometown = action.payload.hometown;
+            return {
+                ...state,
+                first_name: action.payload.first_name,
+                last_name: action.payload.last_name,
+                birth_date: action.payload.birth_date,
+                hometown: action.payload.hometown,
+            }
         },
 
         signUpSecondStep(state, action) {
-            console.log('state:', state)
-            console.log(action)
-
             state.username = action.payload.login;
             state.password = action.payload.password;
             state.confirm_password = action.payload.confirm_password;
+
+            return state;
         }
     }
 })
