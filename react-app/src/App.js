@@ -19,7 +19,9 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Navigate to="/login" />} />
                     <Route path="/login" element={<WelcomePage/>}/>
-                    <Route path="/profile" element={<MainContent content={<Profile/>}/>}/>
+                    <Route path="/profile/:userid"
+                           element={<MainContent content={<Profile/>}/>}
+                    />
                     <Route path="/settings" element={<MainContent content={<Settings/>}/>}/>
                     <Route path="/friends" element={<MainContent content={<Friends/>}/>}/>
                     <Route path="/messages" element={<MainContent content={<Messages/>}/>}/>

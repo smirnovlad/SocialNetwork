@@ -10,36 +10,40 @@ from .serializers import UserSerializer, MessageSerializer, FeedbackSerializer, 
 
 # Create your views here.
 
-class CustomAPIViews(mixins.ListModelMixin,
-                     mixins.CreateModelMixin,
+class CustomInstanceAPIViews(mixins.CreateModelMixin,
                      generics.RetrieveUpdateDestroyAPIView):
-    def get(self, request, *args, **kwargs):
-        generate()
-        return self.list(request, *args, **kwargs)
-
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
 
-class UserAPIViews(CustomAPIViews):
+class UserInstanceAPIViews(CustomInstanceAPIViews):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
 
-class MessageAPIViews(CustomAPIViews):
+class MessageInstanceAPIViews(CustomInstanceAPIViews):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = (IsAuthenticated,)
 
 
-class ChatAPIViews(CustomAPIViews):
+class ChatInstanceAPIViews(CustomInstanceAPIViews):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
     permission_classes = (IsAuthenticated,)
 
 
-class FeedbackAPIViews(CustomAPIViews):
+class FeedbackInstanceAPIViews(CustomInstanceAPIViews):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+
+class UserAPIViews(mixins.ListModelMixin, UserInstanceAPIViews):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    # permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        generate()
+        return self.list(request, *args, **kwargs)

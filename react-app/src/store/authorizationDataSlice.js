@@ -4,11 +4,10 @@ import {authorize} from "../api/authorization"
 const authorizationDataSlice = createSlice({
     name: 'authorizationData',
     initialState: {
-        username: 'ewcfewfc',
-        password: 'privetergge',
+        username: 'Vlad',
+        password: 'privet123!',
         // username: '',
         // password: '',
-        token: null,
         status: null,
         error: null
     },
@@ -24,9 +23,7 @@ const authorizationDataSlice = createSlice({
             state.error = null
         },
         [authorize.fulfilled]: (state, action) => {
-            console.log(action.payload)
             state.status = 'resolved'
-            state.token = action.payload.auth_token
         },
         [authorize.rejected]: (state, action) => {
             state.status = 'failed'

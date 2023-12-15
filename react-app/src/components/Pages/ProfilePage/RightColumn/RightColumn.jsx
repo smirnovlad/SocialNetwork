@@ -1,22 +1,20 @@
 import classes from "./RightColumn.module.css"
 import {Text} from 'react-native'
+import {useSelector} from "react-redux"
+import store from '../../../../store/store'
 
 const RightColumn = () => {
-    const userName = "Vlad Smirnov";
-    const login = "smirnovlad";
-    const hometown = "Moscow";
-    const age = 20;
+    const {first_name, last_name, hometown, birth_date} = useSelector(state => state.currentProfileData)
 
     const textStyle = {margin: "10%", fontSize: 24};
     const datas = [
-        {text: "Login: ", value: login},
         {text: "Hometown: ", value: hometown},
-        {text: "Age: ", value: age},
+        {text: "Birth data: ", value: birth_date},
     ]
 
     return (
         <div className={classes.RightColumn}>
-            <h2 style={{marginLeft: "10%"}}> {userName} </h2>
+            <h2 style={{marginLeft: "10%"}}> {first_name + " " + last_name} </h2>
             <hr style={{marginLeft: "10%"}}/>
              { datas.map((data, index) =>
                 <div key={index}>

@@ -4,6 +4,8 @@ import {useNavigate} from "react-router-dom"
 import {useSelector, useDispatch, ReactReduxContext} from "react-redux"
 import {logIn} from "../../../store/authorizationDataSlice"
 import {authorize} from "../../../api/authorization"
+import store from '../../../store/store'
+import {fetchAuthorizedUserInfo} from "../../../api/userInfo"
 
 const AuthorizationForm = (props) => {
     const dispatch = useDispatch()
@@ -23,7 +25,7 @@ const AuthorizationForm = (props) => {
         "password": password
     }))
 
-    const {status, error, token} = useSelector(state => state.authorizationData)
+    const {status, error} = useSelector(state => state.authorizationData)
 
     const onLogInClicked = async function () {
         updateData();
@@ -31,7 +33,16 @@ const AuthorizationForm = (props) => {
             console.log(error.message)
         })).unwrap()
             .then((originalPromiseResult) => {
-                navigate("/profile");
+                let token = originalPromiseResult.auth_token
+                let authorizedUserInfo = store.getState().authorizedUserInfo
+                dispatch(fetchAuthorizedUserInfo(authorizedUserInfo.token))
+                    .unwrap()
+                    .then((promiseResult) => {
+                        let currentProfileData = store.getState().currentProfileData
+                        navigate(`/profile/${currentProfileData.id}`)
+                    }).catch((rejectedValueOrSerializedError) => {
+                        console.log(rejectedValueOrSerializedError)
+                    })
             })
             .catch((rejectedValueOrSerializedError) => {
                 console.log(rejectedValueOrSerializedError)

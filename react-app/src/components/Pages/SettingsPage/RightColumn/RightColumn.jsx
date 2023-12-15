@@ -26,7 +26,7 @@ const RightColumn = (props) => {
                 <div key={index}>
                     <div style={{height: 5}}></div>
                     <Text
-                        style={textStyle}>text
+                        style={textStyle}>
                         {data.text} {data.value}
                     </Text>
                 </div>) }

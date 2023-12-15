@@ -1,6 +1,8 @@
 import DefaultButton from "../Button/DefaultButton"
 import classes from "./LeftPanel.module.css"
 import {Link} from 'react-router-dom'
+import {useParams} from "react-router-dom"
+import {useSelector} from "react-redux"
 
 const LeftPanel = (props) => {
     const buttonStyle = {
@@ -11,8 +13,9 @@ const LeftPanel = (props) => {
         textIndent: 26
     }
 
+    const {id} = useSelector(state => state.authorizedUserInfo)
     const buttons = [
-        { text: "My profile", handler: props.onMyProfileClicked, link: "/profile"},
+        { text: "My profile", handler: props.onMyProfileClicked, link: `/profile/${id}`},
         { text: "Friends", handler: props.onFriendsClicked, link: "/friends"},
         { text: "Messages", handler: props.onMessagesClicked, link: "/messages"},
         { text: "Settings", handler: props.onSettingsClicked, link: "/settings"},
