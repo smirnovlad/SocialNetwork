@@ -14,7 +14,7 @@ const Feedback = (props) => {
     const dispatch = useDispatch();
     const [feedback, setFeedback] = useState([])
     const [review, setReview] = useState("")
-    const scrollContainerRef = useRef(null); // Ссылка на DOM-элемент скроллбара
+    const scrollContainerRef = useRef(null);
 
     const {id} = useSelector(state => state.authorizedUserInfo)
 

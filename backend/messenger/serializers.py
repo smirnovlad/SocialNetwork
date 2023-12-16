@@ -9,6 +9,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    sender = serializers.PrimaryKeyRelatedField(read_only=True)
+    receiver = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Message
         fields = '__all__'

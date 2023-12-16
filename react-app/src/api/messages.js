@@ -100,3 +100,26 @@ export const fetchChatInfo = async function (data) {
     const res = await response.json()
     return res
 }
+
+export const postMessage = async function (data) {
+    let {token, message, chatId} = data
+
+    let url = `http://127.0.0.1:8000/messenger/api/v1/messages/`
+    let requestBody = {
+        text: message,
+        chat: chatId
+    }
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify(requestBody)
+    })
+    if (!response.ok) {
+        throw new Error('Error')
+    }
+    const res = await response.json()
+    return res
+}

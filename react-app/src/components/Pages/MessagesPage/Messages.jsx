@@ -6,10 +6,11 @@ import {fetchChatsPreviewInfo} from "../../../api/messages"
 import {Text} from 'react-native'
 import {Link} from "react-router-dom"
 import store from '../../../store/store'
-import {useEffect, useState} from "react"
+import {useEffect, useState, useRef} from "react"
 
 const Messages = () => {
     const [chatsInfo, setChatsInfo] = useState([])
+    const scrollContainerRef = useRef(null);
 
     useEffect(() => {
         async function getChatsInfo() {
@@ -20,6 +21,12 @@ const Messages = () => {
         }
         getChatsInfo();
     }, []);
+
+   useEffect(() => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+        }
+    }, [chatsInfo]);
 
     return (
         <div>
@@ -39,7 +46,7 @@ const Messages = () => {
                 borderRadius: 25,
                 overflow: "hidden"
             }}>
-                <div style={{borderRadius: 25, position: "absolute"}} className={classes.CustomizedScrollbar}>
+                <div id={scrollContainerRef} style={{borderRadius: 25, position: "absolute"}} className={classes.CustomizedScrollbar}>
                     <div style={{width: "100%", position: "absolute"}}>
                         {
                             chatsInfo.map((info, index) =>

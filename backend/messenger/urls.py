@@ -16,7 +16,7 @@ urlpatterns = [
     path('api/v1/users/', UserAPIViews.as_view()),
     path('api/v1/users/<int:pk>', UserInstanceAPIViews.as_view()),
     path('api/v1/messages/', MessageAPIViews.as_view()),
-    path('api/v1/messages/<int:pk>', MessageInstanceAPIViews.as_view()),
+    # path('api/v1/messages/<int:pk>', MessageInstanceAPIViews.as_view()),
     path('api/v1/chatlist/', ChatAPIViews.as_view()),
     path('api/v1/chatlist/<int:pk>', ChatInstanceAPIViews.as_view()),
     path('api/v1/feedback/', FeedbackAPIViews.as_view()),
