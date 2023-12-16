@@ -21,6 +21,8 @@ class ChatSerializer(serializers.ModelSerializer):
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
+    sender = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Feedback
         fields = '__all__'

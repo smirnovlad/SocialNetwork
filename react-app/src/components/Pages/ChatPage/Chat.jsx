@@ -79,7 +79,7 @@ const Chat = (props) => {
                             messages.map((message, index) =>
                                 <div key={index}
                                      style={{textAlign: "left", paddingLeft: 15, paddingRight: 5, height: 50}}>
-                                    <Message data={message}/>
+                                    <Message type="chat" data={message}/>
                                 </div>
                             )
                         }

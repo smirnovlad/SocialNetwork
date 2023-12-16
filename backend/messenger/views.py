@@ -3,11 +3,12 @@ from django.http import HttpResponse
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from .generator import generate
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, status
 from .models import User, Message, Feedback, Chat
 from .serializers import UserSerializer, MessageSerializer, FeedbackSerializer, ChatSerializer
 from rest_framework.authtoken.models import Token
 from django.db.models import Q
+from rest_framework.response import Response
 
 # Create your views here.
 
@@ -62,6 +63,15 @@ class FeedbackInstanceAPIViews(CustomInstanceAPIViews):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            serializer.validated_data['sender'] = self.request.user
+            serializer.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class FeedbackAPIViews(mixins.ListModelMixin, FeedbackInstanceAPIViews):
     queryset = Feedback.objects.all()

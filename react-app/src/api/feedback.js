@@ -16,3 +16,24 @@ export const fetchFeedback = createAsyncThunk(
         }
     }
 )
+
+export const postReview = async function(data) {
+    let {token, review} = data
+    let url = `http://127.0.0.1:8000/messenger/api/v1/feedback/`
+    let requestBody = {
+        text: review
+    }
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify(requestBody)
+    })
+    if (!response.ok) {
+        throw new Error('Error')
+    }
+    const res = await response.json()
+    return res
+}
