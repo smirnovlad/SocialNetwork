@@ -26,6 +26,7 @@ const LeftPanel = (props) => {
         ]
     } else {
         buttons = [
+            {text: "All users", handler: props.onAllUsersClicked, link: "/users"},
             {text: "Feedback", handler: props.onFeedbackClicked, link: "/feedback"},
             {text: "Log in", handler: props.onLogInClicked, link: "/login"}
         ]

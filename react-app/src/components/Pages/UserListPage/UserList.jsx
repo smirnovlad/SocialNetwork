@@ -10,8 +10,11 @@ const UserList = (type) => {
     const dispatch = useDispatch()
     const [searchRequest, setSearchRequest] = useState("")
     const [usersInfo, setUsersInfo] = useState([])
+    const [title, setTitle] = useState("")
 
     useEffect(() => {
+        setTitle(type.type === "friends" ? "Friends" : "All users")
+        setUsersInfo([])
         async function getUsersInfo() {
             let data = [];
             if (type.type === "friends") {
@@ -41,7 +44,7 @@ const UserList = (type) => {
     return (
         <div>
             <div>
-                <Text style={{fontSize: 36}}> Friends </Text>
+                <Text style={{fontSize: 36}}> {title} </Text>
             </div>
             <br/>
             <input onChange={e => setSearchRequest(e.target.value)} placeholder={"Search users"}

@@ -23,7 +23,7 @@ function App() {
                            element={<MainContent content={<Profile/>}/>}
                     />
                     <Route path="/settings" element={<MainContent requiredAuth={true} content={<Settings/>}/>}/>
-                    <Route path="/users" element={<MainContent requiredAuth={true} content={<UserList type={"all"} />}/>}/>
+                    <Route path="/users" element={<MainContent content={<UserList type={"all"} />}/>}/>
                     <Route path="/friends" element={<MainContent requiredAuth={true} content={<UserList type={"friends"} />}/>}/>
                     <Route path="/messages" element={<MainContent requiredAuth={true} content={<Messages/>}/>}/>
                     <Route path="/feedback" element={<MainContent content={<Feedback/>}/>}/>
