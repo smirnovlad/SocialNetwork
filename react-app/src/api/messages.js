@@ -53,6 +53,7 @@ export const fetchChatsPreviewInfo = async function (data) {
         }
     });
 
+    // TODO: run promises sequentially to order message (we need to save the most recent)
     const resolvedUsers = await Promise.all(userPromises);
     chatsInfo = resolvedUsers.filter((info) => info !== undefined);
 

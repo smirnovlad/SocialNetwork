@@ -40,7 +40,7 @@ const Chat = (props) => {
 
             let result = messagesInfo.payload
             for (let message of result) {
-                message.name = message.id == secondUser.id ? secondUser.name : "Me";
+                message.name = message.id === secondUser.id ? secondUser.name : "Me";
             }
             setMessages(result)
         }
