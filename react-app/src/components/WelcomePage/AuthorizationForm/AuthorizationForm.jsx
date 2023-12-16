@@ -29,6 +29,7 @@ const AuthorizationForm = (props) => {
 
     const onLogInClicked = async function () {
         updateData();
+        // TODO: move to async/await
         dispatch(authorize({login, password}, (error) => {
             console.log(error.message)
         })).unwrap()

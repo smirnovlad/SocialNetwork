@@ -1,5 +1,4 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
-import store from '../store/store'
 
 export const fetchFeedback = createAsyncThunk(
     'fetchFeedback',
@@ -11,7 +10,6 @@ export const fetchFeedback = createAsyncThunk(
                 throw new Error('Error')
             }
             const data = await response.json()
-            console.log("DATA: ", data)
             return data
         } catch (error) {
             return rejectWithValue(error.message)

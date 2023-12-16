@@ -33,7 +33,7 @@ const UserList = (type) => {
             }
         }
 
-        getUsersInfo()
+        getUsersInfo();
     }, [dispatch, type])
     usersInfo.sort((x, y) => x.name < y.name ? -1 : 1);
 

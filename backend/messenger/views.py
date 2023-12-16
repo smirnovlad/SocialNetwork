@@ -36,8 +36,10 @@ class MessageAPIViews(mixins.ListModelMixin, CustomInstanceAPIViews):
         return self.list(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Message.objects.filter(Q(sender=self.request.user.id) | Q(receiver=self.request.user.id))
-
+        if not self.request.query_params:
+            return Message.objects.filter(Q(sender=self.request.user.id) | Q(receiver=self.request.user.id)).order_by('timestamp')
+        else:
+            return Message.objects.filter(Q(chat=self.request.query_params['chat_id'])).order_by('timestamp')
 
 class ChatInstanceAPIViews(CustomInstanceAPIViews):
     queryset = Chat.objects.all()
@@ -75,5 +77,4 @@ class UserAPIViews(mixins.ListModelMixin, UserInstanceAPIViews):
     # permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
-        # generate()
         return self.list(request, *args, **kwargs)

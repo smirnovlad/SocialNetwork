@@ -38,7 +38,7 @@ class Message(models.Model):
 
 class Feedback(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.CharField(max_length=10000)
+    text = models.CharField(max_length=10000)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

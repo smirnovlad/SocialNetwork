@@ -19,7 +19,7 @@ export const fetchAuthorizedUserInfo = createAsyncThunk(
     }
 )
 
-const fetchUserInfoHelper = async function(id) {
+export const fetchUserInfoHelper = async function(id) {
     let url = `http://127.0.0.1:8000/messenger/api/v1/users/${id}`
     const response = await fetch(url)
     if (!response.ok) {
@@ -42,11 +42,10 @@ export const fetchUserInfo = createAsyncThunk(
 export const fetchUserListInfo = async function (friends) {
     let friendsInfo = []
     for (const friend_id of friends) {
-        let response = await fetchUserInfoHelper(friend_id).then((data) => {
-            friendsInfo.push({
-                name: data.first_name + " " + data.last_name,
-                id: data.id
-            })
+        let data = await fetchUserInfoHelper(friend_id)
+        friendsInfo.push({
+            name: data.first_name + " " + data.last_name,
+            id: data.id
         })
     }
     return friendsInfo
