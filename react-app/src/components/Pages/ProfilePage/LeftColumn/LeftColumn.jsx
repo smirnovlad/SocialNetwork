@@ -3,13 +3,15 @@ import profile_photo from "../../../../img/profile_photo.png"
 import DefaultButton from "../../../Button/DefaultButton"
 import MessageButton from "../../../Button/MessageButton"
 import {useSelector} from "react-redux"
-import {useParams} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import {useEffect, useState} from "react"
 import {updateUserFriendList} from "../../../../api/userInfo"
 import {useDispatch} from "react-redux"
 import store from '../../../../store/store'
+import {getChat} from "../../../../api/messages"
 
 const LeftColumn = (props) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch()
     const {id, friends} = useSelector(state => state.authorizedUserInfo);
     const params = useParams();
@@ -84,6 +86,14 @@ const LeftColumn = (props) => {
         }
     }, []);
 
+    const openChat = async function ()  {
+        const token = store.getState().authorizedUserInfo.token;
+        const secondUserId = params.userid;
+        const senderUserId = store.getState().authorizedUserInfo.id;
+        const chat = await getChat({token, senderUserId, secondUserId});
+        navigate(`/chat/${chat.id}`);
+    }
+
     return (
         <div className={classes.LeftColumn}>
             <img src={profile_photo} style={{borderRadius: 10, width: "100%", height: "85%", float: "left"}}
@@ -98,7 +108,7 @@ const LeftColumn = (props) => {
                     backgroundColor: buttonProps.backgroundColor,
                     color: "white"
                 }}/>
-                <MessageButton style={{width: "20%", height: 36, float: "right", position: "relative", top: 10}}/>
+                <MessageButton onClick={openChat} style={{width: "20%", height: 36, float: "right", position: "relative", top: 10}}/>
             </div>}
         </div>
     )

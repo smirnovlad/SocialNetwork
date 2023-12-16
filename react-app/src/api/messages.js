@@ -123,3 +123,57 @@ export const postMessage = async function (data) {
     const res = await response.json()
     return res
 }
+
+export const fetchChatList = async function (data) {
+    let {token} = data
+    let url = `http://127.0.0.1:8000/messenger/api/v1/chatlist/`
+    const response = await fetch(url, {
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Token ${token}`,
+        }
+    })
+    if (!response.ok) {
+        throw new Error('Error')
+    }
+    const res = await response.json()
+    return res
+}
+
+export const createChat = async function (data) {
+    let {token, senderUserId, secondUserId} = data
+
+    let url = `http://127.0.0.1:8000/messenger/api/v1/chatlist/`
+    let requestBody = {
+        firstUser: senderUserId,
+        secondUser: secondUserId
+    }
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify(requestBody)
+    })
+    if (!response.ok) {
+        throw new Error('Error')
+    }
+    const res = await response.json()
+    return res
+}
+
+export const getChat = async function (data) {
+    const {token, senderUserId, secondUserId} = data;
+    const chatList = await fetchChatList({token});
+
+    const chat = chatList.filter((item) => {
+        return parseInt(item.firstUser) === parseInt(secondUserId) ||
+            parseInt(item.secondUser) === parseInt(secondUserId);
+    })
+    if (chat.length === 0) {
+        return await createChat({token, senderUserId, secondUserId});
+    } else {
+        return chat[0];
+    }
+}
