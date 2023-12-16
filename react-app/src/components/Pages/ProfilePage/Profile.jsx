@@ -1,9 +1,9 @@
 import classes from "./Profile.module.css"
 import LeftColumn from "./LeftColumn/LeftColumn"
 import RightColumn from "./RightColumn/RightColumn"
-import {useState, useEffect} from "react"
+import {useEffect, useState} from "react"
 import {useDispatch} from "react-redux"
-import {useParams, useNavigate} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import {fetchUserInfo} from "../../../api/userInfo"
 import store from '../../../store/store'
 
@@ -25,8 +25,8 @@ const Profile = (userId) => {
                 navigate("/login")
                 console.log(rejectedValueOrSerializedError)
             }).finally(() => {
-                setLoading(false)
-            })
+            setLoading(false)
+        })
     }, [dispatch, params.userid]);
 
     // TODO: handle case if userId is not exist

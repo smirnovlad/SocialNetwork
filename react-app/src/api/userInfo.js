@@ -1,5 +1,4 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
-import store from '../store/store'
 
 export const fetchAuthorizedUserInfo = createAsyncThunk(
     'fetchAuthorizedUserData',
@@ -53,17 +52,41 @@ export const fetchUserListInfo = async function (friends) {
     return friendsInfo
 }
 
+export const fetchAllUsersInfo = createAsyncThunk(
+    'fetchAllUsersData',
+    async function (_, {rejectWithValue}) {
+        try {
+            let url = `http://127.0.0.1:8000/messenger/api/v1/users`
+            const response = await fetch(url)
+            if (!response.ok) {
+                throw new Error('Error')
+            }
+            const res = await response.json()
+
+            let usersInfo = []
+            for (let user of res) {
+                usersInfo.push({
+                    name: user.first_name + " " + user.last_name,
+                    id: user.id
+                })
+            }
+
+            return usersInfo
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }
+    }
+)
+
 export const updateUserSettings = createAsyncThunk(
     'updateUserSettings',
     async function (data, {rejectWithValue}) {
         try {
-            console.log("UPDATE USER SETTINGS")
             let {token, id, birthDate, hometown} = data;
             let requestBody = {
                 bornAt: birthDate,
                 homeTown: hometown
             }
-            console.log("request body: ", requestBody)
             let url = `http://127.0.0.1:8000/messenger/api/v1/users/${id}`
             const response = await fetch(url, {
                 method: 'PATCH',
@@ -73,7 +96,34 @@ export const updateUserSettings = createAsyncThunk(
                 },
                 body: JSON.stringify(requestBody)
             })
-            console.log("RESPONSE: ", response)
+            if (!response.ok) {
+                throw new Error('Error')
+            }
+            const res = await response.json()
+            return res
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }
+    }
+)
+
+export const updateUserFriendList = createAsyncThunk(
+    'updateUserFriendList',
+    async function (data, {rejectWithValue}) {
+        try {
+            let {token, newFriendList} = data;
+            let requestBody = {
+                friends: newFriendList
+            }
+            let url = `http://127.0.0.1:8000/messenger/api/v1/auth/users/me/`
+            const response = await fetch(url, {
+                method: 'PATCH',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Token ${token}`,
+                },
+                body: JSON.stringify(requestBody)
+            })
             if (!response.ok) {
                 throw new Error('Error')
             }

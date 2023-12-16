@@ -5,7 +5,7 @@ import MainContent from "./components/MainContent/MainContent"
 
 import Profile from "./components/Pages/ProfilePage/Profile"
 import Settings from "./components/Pages/SettingsPage/Settings"
-import Friends from "./components/Pages/FriendsPage/Friends"
+import UserList from "./components/Pages/UserListPage/UserList"
 import Messages from "./components/Pages/MessagesPage/Messages"
 import Chat from "./components/Pages/ChatPage/Chat"
 import Feedback from "./components/Pages/FeedbackPage/Feedback"
@@ -23,7 +23,8 @@ function App() {
                            element={<MainContent content={<Profile/>}/>}
                     />
                     <Route path="/settings" element={<MainContent requiredAuth={true} content={<Settings/>}/>}/>
-                    <Route path="/friends" element={<MainContent requiredAuth={true} content={<Friends/>}/>}/>
+                    <Route path="/users" element={<MainContent requiredAuth={true} content={<UserList type={"all"} />}/>}/>
+                    <Route path="/friends" element={<MainContent requiredAuth={true} content={<UserList type={"friends"} />}/>}/>
                     <Route path="/messages" element={<MainContent requiredAuth={true} content={<Messages/>}/>}/>
                     <Route path="/feedback" element={<MainContent content={<Feedback/>}/>}/>
                     <Route path={"*"} element={<Navigate to="/login" />} />

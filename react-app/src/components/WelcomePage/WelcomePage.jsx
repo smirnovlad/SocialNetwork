@@ -12,7 +12,8 @@ const WelcomePage = () => {
         setForm(<AuthorizationForm onSignUpClicked={setRegistrationForm} id={"AuthorizationForm"}/>)
     }
     const setRegistrationForm = () => {
-        setForm(<RegistrationForm onGoBackClicked={setAuthorizationForm} onRegistrationSuccess={setAuthorizationForm} id={"RegistrationForm"}/>)
+        setForm(<RegistrationForm onGoBackClicked={setAuthorizationForm} onRegistrationSuccess={setAuthorizationForm}
+                                  id={"RegistrationForm"}/>)
     }
 
     const [form, setForm] = useState(

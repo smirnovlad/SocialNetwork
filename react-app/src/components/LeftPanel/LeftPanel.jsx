@@ -17,6 +17,7 @@ const LeftPanel = (props) => {
     if (id) {
         buttons = [
             {text: "My profile", handler: props.onMyProfileClicked, link: `/profile/${id}`},
+            {text: "All users", handler: props.onAllUsersClicked, link: "/users"},
             {text: "Friends", handler: props.onFriendsClicked, link: "/friends"},
             {text: "Messages", handler: props.onMessagesClicked, link: "/messages"},
             {text: "Settings", handler: props.onSettingsClicked, link: "/settings"},

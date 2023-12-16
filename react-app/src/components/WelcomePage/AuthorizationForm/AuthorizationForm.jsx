@@ -1,7 +1,7 @@
 import BaseForm from "../../BaseForm/BaseForm"
-import {useState, useEffect} from "react"
+import {useState} from "react"
 import {useNavigate} from "react-router-dom"
-import {useSelector, useDispatch, ReactReduxContext} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {logIn} from "../../../store/authorizationDataSlice"
 import {authorize} from "../../../api/authorization"
 import store from '../../../store/store'
@@ -41,8 +41,8 @@ const AuthorizationForm = (props) => {
                         let currentProfileData = store.getState().currentProfileData
                         navigate(`/profile/${currentProfileData.id}`)
                     }).catch((rejectedValueOrSerializedError) => {
-                        console.log(rejectedValueOrSerializedError)
-                    })
+                    console.log(rejectedValueOrSerializedError)
+                })
             })
             .catch((rejectedValueOrSerializedError) => {
                 console.log(rejectedValueOrSerializedError)

@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {fetchAuthorizedUserInfo, updateUserSettings} from "../api/userInfo"
+import {fetchAuthorizedUserInfo, updateUserSettings, updateUserFriendList} from "../api/userInfo"
 import {authorize} from "../api/authorization"
 
 const authorizedUserInfoSlice = createSlice({
@@ -41,6 +41,9 @@ const authorizedUserInfoSlice = createSlice({
         [updateUserSettings.fulfilled]: (state, action) => {
             state.hometown = action.payload.homeTown
             state.birth_date = action.payload.bornAt
+        },
+        [updateUserFriendList.fulfilled]: (state, action) => {
+            state.friends = action.payload.friends
         },
     }
 })
