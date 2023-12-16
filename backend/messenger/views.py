@@ -39,6 +39,15 @@ class FeedbackInstanceAPIViews(CustomInstanceAPIViews):
     serializer_class = FeedbackSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
+class FeedbackAPIViews(mixins.ListModelMixin, FeedbackInstanceAPIViews):
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def get(self, request, *args, **kwargs):
+        generate()
+        return self.list(request, *args, **kwargs)
+
 class UserAPIViews(mixins.ListModelMixin, UserInstanceAPIViews):
     queryset = User.objects.all()
     serializer_class = UserSerializer

@@ -1,6 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
-from .views import UserInstanceAPIViews, UserAPIViews, MessageInstanceAPIViews, FeedbackInstanceAPIViews, ChatInstanceAPIViews
+from .views import (UserInstanceAPIViews,
+                    UserAPIViews,
+                    MessageInstanceAPIViews,
+                    FeedbackInstanceAPIViews,
+                    FeedbackAPIViews,
+                    ChatInstanceAPIViews)
 
 urlpatterns = [
     path('api/v1/auth/', include('djoser.urls')),
@@ -11,6 +16,6 @@ urlpatterns = [
     # path('api/v1/messages/<int:pk>', MessageAPIViews.as_view()),
     # path('api/v1/chatlist/', ChatAPIViews.as_view()),
     # path('api/v1/chatlist/<int:pk>', ChatAPIViews.as_view()),
-    # path('api/v1/feedback/', FeedbackAPIViews.as_view()),
-    # path('api/v1/feedback/<int:pk>', FeedbackAPIViews.as_view()),
+    path('api/v1/feedback/', FeedbackAPIViews.as_view()),
+    path('api/v1/feedback/<int:pk>', FeedbackAPIViews.as_view()),
 ]

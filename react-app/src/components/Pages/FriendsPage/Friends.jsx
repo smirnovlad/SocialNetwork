@@ -44,8 +44,10 @@ const Friends = () => {
                             <div key={index}>
                                 <hr style={{width: "100%"}}/>
                                 <div style={{height: 50, paddingLeft: 10}}>
-                                    <Link to={`/profile/${friend.id}`}>
-                                        <a style={{textDecoration: "none", fontSize:24, fontWeight: "bold", color: "#2A5885", position: "relative", top: "25%"}}> {friend.name} </a>
+                                    <Link to={`/profile/${friend.id}`} style={{ textDecoration: 'none' }}>
+                                        <a style={{fontSize:24, fontWeight: "bold", color: "#2A5885", position: "relative", top: "25%"}}>
+                                            {friend.name}
+                                        </a>
                                     </Link>
                                 </div>
                             </div>

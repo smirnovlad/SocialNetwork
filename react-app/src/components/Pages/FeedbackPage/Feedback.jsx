@@ -2,22 +2,40 @@ import DefaultButton from "../../Button/DefaultButton"
 import Message from "../../Message/Message"
 import classes from "./Feedback.module.css"
 import {Text} from 'react-native'
+import {useState, useEffect} from "react"
+import {Link} from 'react-router-dom'
+import store from '../../../store/store'
+import {useDispatch} from "react-redux"
+import {fetchFeedback} from "../../../api/feedback"
+import {fetchUserListInfo} from "../../../api/userInfo"
 
 const Feedback = (props) => {
-    const datas = [
-        {name: "Milan Kurmaev", username: "themeelanoid", message: "The best social network", sentAt: "4:23 pm"},
-        {name: "Milan Kurmaev", username: "themeelanoid", message: "The best social network", sentAt: "4:23 pm"},
-        {name: "Milan Kurmaev", username: "themeelanoid", message: "The best social network", sentAt: "4:23 pm"},
-        {name: "Milan Kurmaev", username: "themeelanoid", message: "The best social network", sentAt: "4:23 pm"},
-        {name: "Milan Kurmaev", username: "themeelanoid", message: "The best social network", sentAt: "4:23 pm"},
-        {name: "Milan Kurmaev", username: "themeelanoid", message: "The best social network", sentAt: "4:23 pm"},
-        {name: "Milan Kurmaev", username: "themeelanoid", message: "The best social network", sentAt: "4:23 pm"},
-        {name: "Milan Kurmaev", username: "themeelanoid", message: "The best social network", sentAt: "4:23 pm"},
-        {name: "Milan Kurmaev", username: "themeelanoid", message: "The best social network", sentAt: "4:23 pm"},
-        {name: "Milan Kurmaev", username: "themeelanoid", message: "The best social network", sentAt: "4:23 pm"},
-        {name: "Milan Kurmaev", username: "themeelanoid", message: "The best social network", sentAt: "4:23 pm"},
-        {name: "Milan Kurmaev", username: "themeelanoid", message: "The best social network", sentAt: "4:23 pm"},
-    ]
+    const dispatch = useDispatch();
+    const [feedback, setFeedback] = useState([])
+
+    useEffect(() => {
+        dispatch(fetchFeedback()).unwrap()
+            .then(async (originalPromiseResult) => {
+                let users = originalPromiseResult.map(item => {
+                    return item.sender
+                });
+                let usersInfo = await fetchUserListInfo(users)
+
+                originalPromiseResult = originalPromiseResult.map(
+                    ((item, index) => {
+                            let info = usersInfo[index];
+                            item.name = info.name;
+                            return item;
+                        }
+                    ))
+                setFeedback(originalPromiseResult)
+            })
+            .catch((rejectedValueOrSerializedError) => {
+                console.log(rejectedValueOrSerializedError)
+            })
+    }, [dispatch]);
+
+
 
     return (
         <div style={{textAlign: "center"}}>
@@ -29,9 +47,9 @@ const Feedback = (props) => {
                 <div style={{borderRadius: 25, position: "absolute"}} className={classes.CustomizedScrollbar} >
                     <div style={{width: "100%", position: "absolute"}}>
                         {
-                        datas.map((feedback, index) =>
+                        feedback.map((data, index) =>
                         <div key={index} style={{textAlign: "left", paddingLeft: 15, paddingRight: 5, height: 50}}>
-                            <Message data={feedback}/>
+                            <Message data={data}/>
                         </div>
                         )
                         }

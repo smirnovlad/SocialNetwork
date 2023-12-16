@@ -1,13 +1,17 @@
 import classes from "./Message.module.css"
 import {Text} from 'react-native'
+import {Link} from 'react-router-dom'
+
 const Message = ({data}) => {
     return (
         <div className={classes.Message}>
-            <a href={data.username} style={{fontWeight: "bold", textDecoration: "none", color: "black"}}>
-                {data.name}
-            </a>
+            <Link to={`/profile/${data.sender}`} style={{ textDecoration: 'none' }}>
+                <a style={{fontWeight: "bold", color: "black"}}>
+                    {data.name}
+                </a>
+            </Link>
             <Text style={{float: "right", color: "#818C99", paddingRight: "10px"}}>
-                {data.sentAt}
+                {data.timestamp}
             </Text>
             <div style={{height:5}}></div>
             <Text>
