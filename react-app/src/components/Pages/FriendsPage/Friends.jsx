@@ -23,9 +23,7 @@ const Friends = () => {
     friendsInfo.sort((x, y) => x.name < y.name ? -1 : 1);
 
     let filtered = friendsInfo.filter(friend => {
-        return String(friend.name.toLowerCase()).includes(searchRequest.toLowerCase()) ||
-            String(friend.username.toLowerCase()).includes(searchRequest.toLowerCase());
-    });
+        return String(friend.name.toLowerCase()).includes(searchRequest.toLowerCase())});
 
     return (
         <div>
