@@ -36,7 +36,7 @@ const Profile = (userId) => {
 
     return (
         <div className={classes.Profile}>
-            <LeftColumn/>
+            <LeftColumn data={data}/>
             <RightColumn data={data}/>
         </div>
     )

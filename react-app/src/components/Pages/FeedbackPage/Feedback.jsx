@@ -3,15 +3,16 @@ import Message from "../../Message/Message"
 import classes from "./Feedback.module.css"
 import {Text} from 'react-native'
 import {useState, useEffect} from "react"
-import {Link} from 'react-router-dom'
-import store from '../../../store/store'
 import {useDispatch} from "react-redux"
 import {fetchFeedback} from "../../../api/feedback"
 import {fetchUserListInfo} from "../../../api/userInfo"
+import {useSelector} from "react-redux"
 
 const Feedback = (props) => {
     const dispatch = useDispatch();
     const [feedback, setFeedback] = useState([])
+
+    const {id} = useSelector(state => state.authorizedUserInfo)
 
     useEffect(() => {
         dispatch(fetchFeedback()).unwrap()
@@ -57,11 +58,11 @@ const Feedback = (props) => {
                 </div>
             </div>
 
-            <div style={{display: "flex", width: "92.5%", position: "absolute", bottom: 20}}>
+            {id && <div style={{display: "flex", width: "92.5%", position: "absolute", bottom: 20}}>
                 <input placeholder={"Leave some feedback"} style={{width: "100%", height: 35, float: "left", borderRadius: 10, textIndent: 10, fontSize: 24}}/>
                 <div style={{width: "2%"}}></div>
                 <DefaultButton handler={props.handler} text={"Send"} style={{width: 100, height: 35, float: "right", backgroundColor: "#447BBA", color: "white"}}/>
-            </div>
+            </div>}
         </div>
     )
 }

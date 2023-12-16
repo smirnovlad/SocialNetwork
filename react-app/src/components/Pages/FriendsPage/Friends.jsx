@@ -9,6 +9,7 @@ import {Link} from 'react-router-dom'
 
 const Friends = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [searchRequest, setSearchRequest] = useState("")
     const [friendsInfo, setFriendsInfo] = useState([])
 

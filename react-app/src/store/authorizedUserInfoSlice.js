@@ -5,7 +5,7 @@ import {authorize} from "../api/authorization"
 const authorizedUserInfoSlice = createSlice({
     name: 'authorizedUserInfo',
     initialState: {
-        id: '',
+        id: null,
         username: '',
         first_name: '',
         last_name: '',

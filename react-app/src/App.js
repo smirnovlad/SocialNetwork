@@ -22,10 +22,11 @@ function App() {
                     <Route path="/profile/:userid"
                            element={<MainContent content={<Profile/>}/>}
                     />
-                    <Route path="/settings" element={<MainContent content={<Settings/>}/>}/>
-                    <Route path="/friends" element={<MainContent content={<Friends/>}/>}/>
-                    <Route path="/messages" element={<MainContent content={<Messages/>}/>}/>
+                    <Route path="/settings" element={<MainContent requiredAuth={true} content={<Settings/>}/>}/>
+                    <Route path="/friends" element={<MainContent requiredAuth={true} content={<Friends/>}/>}/>
+                    <Route path="/messages" element={<MainContent requiredAuth={true} content={<Messages/>}/>}/>
                     <Route path="/feedback" element={<MainContent content={<Feedback/>}/>}/>
+                    <Route path={"*"} element={<Navigate to="/login" />} />
                 </Routes>
         </BrowserRouter>
     </div>
