@@ -1,15 +1,14 @@
 import classes from "./Chat.module.css"
 import DefaultButton from "../../Button/DefaultButton"
 import Message from "../../Message/Message"
-import {fetchChatMessages} from "../../../api/messages"
+import {fetchChatInfo, fetchChatMessages, postMessage} from "../../../api/messages"
 import {fetchUserInfo} from "../../../api/userInfo"
-import {fetchChatInfo, postMessage} from "../../../api/messages"
 import store from '../../../store/store'
 
 import {Text} from 'react-native'
 import {useDispatch} from "react-redux"
 import {Link, useParams} from "react-router-dom"
-import {useEffect, useState, useRef} from "react"
+import {useEffect, useRef, useState} from "react"
 
 const Chat = (props) => {
     const dispatch = useDispatch()
@@ -20,14 +19,32 @@ const Chat = (props) => {
         id: -1,
         name: "unknown"
     })
+    const [socket, setSocket] = useState(null);
     const scrollContainerRef = useRef(null);
 
-    useEffect( () => {
+    useEffect(() => {
         const getChat = async function () {
             const token = store.getState().authorizedUserInfo.token;
             const chatId = params.chatid;
 
             const chatInfo = await fetchChatInfo({token, chatId});
+
+            const newSocket = new WebSocket(`ws://localhost:8000/ws/chat/${chatId}/`);
+
+            newSocket.onopen = () => {
+                console.log('WebSocket connection opened');
+            };
+
+            newSocket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                console.log('Received message from server:', data);
+            };
+
+            newSocket.onclose = () => {
+                console.log('WebSocket connection closed');
+            };
+
+            setSocket(newSocket);
 
             const authorizedUser = store.getState().authorizedUserInfo;
             const secondUserId = chatInfo.firstUser == authorizedUser.id ? chatInfo.secondUser : chatInfo.firstUser;
@@ -50,12 +67,20 @@ const Chat = (props) => {
     }, [])
 
     useEffect(() => {
+        return () => {
+            if (socket) {
+                socket.close();
+            }
+        };
+    }, [socket]);
+
+    useEffect(() => {
         if (scrollContainerRef.current) {
             scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
         }
     }, [messagesHistory]);
 
-    const sendMessage = async function() {
+    const sendMessage = async function () {
         const authorizedUserInfo = store.getState().authorizedUserInfo;
         const token = authorizedUserInfo.token;
         const chatId = params.chatid;
@@ -90,7 +115,8 @@ const Chat = (props) => {
                 borderRadius: 25,
                 overflow: "hidden"
             }}>
-                <div ref={scrollContainerRef} style={{borderRadius: 25, position: "absolute"}} className={classes.CustomizedScrollbar}>
+                <div ref={scrollContainerRef} style={{borderRadius: 25, position: "absolute"}}
+                     className={classes.CustomizedScrollbar}>
                     <div style={{width: "100%", position: "absolute"}}>
                         {
                             messagesHistory.map((message, index) =>
@@ -105,7 +131,9 @@ const Chat = (props) => {
             </div>
 
             <div style={{display: "flex", width: "92.5%", position: "absolute", bottom: 20}}>
-                <input value={message} onChange={(e)=>{setMessage(e.target.value)}} placeholder={"Write a message..."} style={{
+                <input value={message} onChange={(e) => {
+                    setMessage(e.target.value)
+                }} placeholder={"Write a message..."} style={{
                     width: "100%",
                     height: 35,
                     float: "left",
