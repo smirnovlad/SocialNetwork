@@ -36,8 +36,9 @@ const Chat = (props) => {
             };
 
             newSocket.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                console.log('Received message from server:', data);
+                const message = JSON.parse(event.data).message;
+                message.name = message.sender === secondUser.id ? secondUser.name : "Me";
+                setMessagesHistory(messagesHistory => [...messagesHistory, {...message}]);
             };
 
             newSocket.onclose = () => {
@@ -59,12 +60,12 @@ const Chat = (props) => {
 
             let history = messagesInfo.payload
             for (let message of history) {
-                message.name = message.id === secondUser.id ? secondUser.name : "Me";
+                message.name = message.sender === secondUser.id ? secondUser.name : "Me";
             }
             setMessagesHistory(history)
         }
         getChat();
-    }, [])
+    }, [dispatch, secondUser.id])
 
     useEffect(() => {
         return () => {

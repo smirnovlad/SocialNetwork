@@ -1,8 +1,13 @@
 import json
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-
+from .models import Message
+from .serializers import MessageSerializer
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -42,3 +47,20 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'message': message
         }))
+
+@receiver(post_save, sender=Message)
+def send_message_update(sender, instance, **kwargs):
+    chat_group_name = f"chat_{instance.chat.id}"
+    print("Chat: ", instance.chat, "; Group name: ", chat_group_name, "; Message: ", instance.text)
+
+    serializer = MessageSerializer(instance)
+
+    channel_layer = get_channel_layer()
+
+    async_to_sync(channel_layer.group_send)(
+        chat_group_name,
+        {
+            'type': 'chat_message',
+            'message': serializer.data
+        }
+    )
