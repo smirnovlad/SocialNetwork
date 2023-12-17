@@ -14,11 +14,32 @@ const Feedback = (props) => {
     const dispatch = useDispatch();
     const [feedback, setFeedback] = useState([])
     const [review, setReview] = useState("")
+    const [socket, setSocket] = useState(null);
     const scrollContainerRef = useRef(null);
 
     const {id} = useSelector(state => state.authorizedUserInfo)
 
     useEffect(() => {
+        const newSocket = new WebSocket(`ws://localhost:8000/ws/feedback/`);
+
+        newSocket.onopen = () => {
+            console.log('WebSocket connection opened');
+        };
+
+        newSocket.onmessage = (event) => {
+            const review = JSON.parse(event.data).review;
+            if (id === review.sender) {
+                review.name = "Me"
+            }
+            setFeedback(feedback => [...feedback, {...review}]);
+        };
+
+        newSocket.onclose = () => {
+            console.log('WebSocket connection closed');
+        };
+
+        setSocket(newSocket);
+
         dispatch(fetchFeedback()).unwrap()
             .then(async (originalPromiseResult) => {
                 let users = originalPromiseResult.map(item => {
@@ -29,7 +50,11 @@ const Feedback = (props) => {
                 originalPromiseResult = originalPromiseResult.map(
                     ((item, index) => {
                             let info = usersInfo[index];
-                            item.name = info.name;
+                            if (info.id == id) {
+                                item.name = "Me"
+                            } else {
+                                item.name = info.name;
+                            }
                             return item;
                         }
                     ))
@@ -40,14 +65,20 @@ const Feedback = (props) => {
             })
     }, [dispatch]);
 
+    useEffect(() => {
+        return () => {
+            if (socket) {
+                socket.close();
+            }
+        };
+    }, [socket]);
+
     const onSendButtonClicked = async function () {
         try {
             const authorizedUserInfo = store.getState().authorizedUserInfo;
             const token = authorizedUserInfo.token;
             const res = await postReview({token, review})
             setReview("")
-            const name = authorizedUserInfo.first_name + " " + authorizedUserInfo.last_name;
-            setFeedback([...feedback, {name: name, ...res}])
         } catch (error) {
         }
     }

@@ -39,16 +39,16 @@ export const fetchUserInfo = createAsyncThunk(
     }
 )
 
-export const fetchUserListInfo = async function (friends) {
-    let friendsInfo = []
-    for (const friend_id of friends) {
-        let data = await fetchUserInfoHelper(friend_id)
-        friendsInfo.push({
+export const fetchUserListInfo = async function (users) {
+    let usersInfo = []
+    for (const user of users) {
+        let data = await fetchUserInfoHelper(user)
+        usersInfo.push({
             name: data.first_name + " " + data.last_name,
             id: data.id
         })
     }
-    return friendsInfo
+    return usersInfo
 }
 
 export const fetchAllUsersInfo = createAsyncThunk(
