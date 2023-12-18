@@ -1,18 +1,26 @@
 import classes from "./Message.module.css"
+import {Text} from 'react-native'
+import {Link} from 'react-router-dom'
 
-const Message = ({data}) => {
+function ConditionalLink({ children, condition, ...props }) {
+    return !!condition && props.to ? <Link {...props}>{children}</Link> : <>{children}</>
+}
+
+const Message = ({type, data}) => {
     return (
         <div className={classes.Message}>
-            <a href={data.username} style={{fontWeight: "bold", textDecoration: "none", color: "black"}}>
-                {data.name}
-            </a>
-            <text style={{float: "right", color: "#818C99", paddingRight: "10px"}}>
-                {data.sentAt}
-            </text>
+            <ConditionalLink to={`/profile/${data.sender}`} condition={type==="feedback"} style={{textDecoration: "none"}}>
+                <a style={{ fontWeight: "bold", color: "black" }}>
+                    {data.name}
+                </a>
+            </ConditionalLink>
+            <Text style={{float: "right", color: "#818C99", paddingRight: "10px"}}>
+                {data.timestamp}
+            </Text>
             <div style={{height:5}}></div>
-            <text>
-                {data.message}
-            </text>
+            <Text>
+                {data.text}
+            </Text>
         </div>
     )
 }

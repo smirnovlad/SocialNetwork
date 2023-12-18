@@ -1,9 +1,11 @@
 import BaseForm from "../../BaseForm/BaseForm"
-import {useState, useEffect} from "react"
+import {useState} from "react"
 import {useNavigate} from "react-router-dom"
-import {useSelector, useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {logIn} from "../../../store/authorizationDataSlice"
-import {fetchData} from "../../../store/authorizationDataSlice"
+import {authorize} from "../../../api/authorization"
+import store from '../../../store/store'
+import {fetchAuthorizedUserInfo} from "../../../api/userInfo"
 
 const AuthorizationForm = (props) => {
     const dispatch = useDispatch()
@@ -23,24 +25,32 @@ const AuthorizationForm = (props) => {
         "password": password
     }))
 
-    useEffect(() => {
-        dispatch(fetchData())
-    }, [dispatch]);
-
-    useEffect(() => {
-       setLogin(authorizationData.username)
-    },[authorizationData])
-
     const {status, error} = useSelector(state => state.authorizationData)
 
-    const onLogInClicked = () => {
-        console.log("Log in clicked: ", {login});
+    const onLogInClicked = async function () {
         updateData();
-        navigate("/profile");
+        // TODO: move to async/await
+        dispatch(authorize({login, password}, (error) => {
+            console.log(error.message)
+        })).unwrap()
+            .then((originalPromiseResult) => {
+                let token = originalPromiseResult.auth_token
+                let authorizedUserInfo = store.getState().authorizedUserInfo
+                dispatch(fetchAuthorizedUserInfo(authorizedUserInfo.token))
+                    .unwrap()
+                    .then((promiseResult) => {
+                        let currentProfileData = store.getState().currentProfileData
+                        navigate(`/profile/${currentProfileData.id}`)
+                    }).catch((rejectedValueOrSerializedError) => {
+                    console.log(rejectedValueOrSerializedError)
+                })
+            })
+            .catch((rejectedValueOrSerializedError) => {
+                console.log(rejectedValueOrSerializedError)
+            })
     }
 
     const onSignUpClicked = () => {
-        console.log("Sign up clicked");
         updateData();
         props.onSignUpClicked();
     }
@@ -53,7 +63,6 @@ const AuthorizationForm = (props) => {
                 firstHandler: onLogInClicked,
                 secondHandler: onSignUpClicked,
             }} id={"AuthorizationForm"}/>
-            {status == 'failed' && <h2>Error data</h2>}
         </div>
     )
 }

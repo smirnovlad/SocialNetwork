@@ -3,10 +3,13 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
     bornAt = models.DateField()
     homeTown = models.CharField(max_length=30)
     avatar = models.ImageField(upload_to="uploads/avatars/", blank=True)
-    friends = models.ManyToManyField("self", symmetrical=False)
+    friends = models.ManyToManyField("self", symmetrical=False, blank=True)
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'bornAt', 'homeTown', 'friends']
 
     @property
     def friendlist(self):
@@ -32,10 +35,9 @@ class Message(models.Model):
     def __str__(self):
         return f"Sender login: {self.sender.login}, receiver login: {self.receiver.login}, message: {self.text}"
 
-
 class Feedback(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.CharField(max_length=10000)
+    text = models.CharField(max_length=10000)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

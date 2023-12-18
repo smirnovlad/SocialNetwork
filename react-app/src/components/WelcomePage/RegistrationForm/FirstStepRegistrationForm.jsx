@@ -7,13 +7,13 @@ const FirstStepRegistrationForm = (props) => {
     const registrationData = useSelector(state => state.registrationData)
     const [firstName, setFirstName] = useState(registrationData.first_name)
     const [lastName, setLastName] = useState(registrationData.last_name)
-    const [age, setAge] = useState(registrationData.age)
+    const [birthDate, setBirthData] = useState(registrationData.birth_date)
     const [homeTown, setHomeTown] = useState(registrationData.hometown)
 
     const data = [
         {text: "First name", onChange: setFirstName, type: "text", value: firstName},
         {text: "Last name", onChange: setLastName, type: "text", value: lastName},
-        {text: "Age", onChange: setAge, type: "text", value: age},
+        {text: "Birth date", onChange: setBirthData, type: "text", value: birthDate},
         {text: "Hometown", onChange: setHomeTown, type: "text", value: homeTown},
     ]
 
@@ -21,7 +21,7 @@ const FirstStepRegistrationForm = (props) => {
     const updateData = () => dispatch(signUpFirstStep({
         "first_name": firstName,
         "last_name": lastName,
-        "age": age,
+        "birth_date": birthDate,
         "hometown": homeTown
     }))
 

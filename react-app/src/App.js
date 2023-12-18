@@ -5,7 +5,7 @@ import MainContent from "./components/MainContent/MainContent"
 
 import Profile from "./components/Pages/ProfilePage/Profile"
 import Settings from "./components/Pages/SettingsPage/Settings"
-import Friends from "./components/Pages/FriendsPage/Friends"
+import UserList from "./components/Pages/UserListPage/UserList"
 import Messages from "./components/Pages/MessagesPage/Messages"
 import Chat from "./components/Pages/ChatPage/Chat"
 import Feedback from "./components/Pages/FeedbackPage/Feedback"
@@ -19,11 +19,16 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Navigate to="/login" />} />
                     <Route path="/login" element={<WelcomePage/>}/>
-                    <Route path="/profile" element={<MainContent content={<Profile/>}/>}/>
-                    <Route path="/settings" element={<MainContent content={<Settings/>}/>}/>
-                    <Route path="/friends" element={<MainContent content={<Friends/>}/>}/>
-                    <Route path="/messages" element={<MainContent content={<Messages/>}/>}/>
+                    <Route path="/profile/:userid"
+                           element={<MainContent content={<Profile/>}/>}
+                    />
+                    <Route path="/settings" element={<MainContent requiredAuth={true} content={<Settings/>}/>}/>
+                    <Route path="/users" element={<MainContent content={<UserList type={"all"} />}/>}/>
+                    <Route path="/friends" element={<MainContent requiredAuth={true} content={<UserList type={"friends"} />}/>}/>
+                    <Route path="/messages" element={<MainContent requiredAuth={true} content={<Messages/>}/>}/>
+                    <Route path="/chat/:chatid" element={<MainContent requiredAuth={true} content={<Chat/>}/>}/>
                     <Route path="/feedback" element={<MainContent content={<Feedback/>}/>}/>
+                    <Route path={"*"} element={<Navigate to="/login" />} />
                 </Routes>
         </BrowserRouter>
     </div>

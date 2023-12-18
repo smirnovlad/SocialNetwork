@@ -1,10 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authorizationDataSlice from "./authorizationDataSlice"
 import registrationDataSlice from './registrationDataSlice'
+import rootReducer from "./reducer"
 
-export default configureStore({
-    reducer: {
-        authorizationData: authorizationDataSlice.reducer,
-        registrationData: registrationDataSlice.reducer
-    }
+const store = configureStore({
+    reducer: rootReducer
 })
+export default store

@@ -9,14 +9,11 @@ import {useState} from "react"
 const WelcomePage = () => {
 
     const setAuthorizationForm = () => {
-        console.log("setAuthorizationForm is called");
         setForm(<AuthorizationForm onSignUpClicked={setRegistrationForm} id={"AuthorizationForm"}/>)
-        console.log(form)
     }
     const setRegistrationForm = () => {
-        console.log("setRegistrationForm is called");
-        setForm(<RegistrationForm onGoBackClicked={setAuthorizationForm} id={"RegistrationForm"}/>)
-        console.log(form)
+        setForm(<RegistrationForm onGoBackClicked={setAuthorizationForm} onRegistrationSuccess={setAuthorizationForm}
+                                  id={"RegistrationForm"}/>)
     }
 
     const [form, setForm] = useState(

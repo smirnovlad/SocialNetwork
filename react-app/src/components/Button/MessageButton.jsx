@@ -5,7 +5,7 @@ const MessageButton = (props) => {
 
     return (
         <div>
-            <button className={classes.MessageButton} style={{...props.style}}>
+            <button className={classes.MessageButton} onClick={props.onClick} style={{...props.style}}>
                 <img src={message_outline} alt={"message_outline"} border={0}/>
             </button>
         </div>
