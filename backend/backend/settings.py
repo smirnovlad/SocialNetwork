@@ -54,7 +54,11 @@ ASGI_APPLICATION = 'backend.asgi.application'
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer' # "helpful in Testing or for local-development purposes"
+        # 'BACKEND': 'channels.layers.InMemoryChannelLayer' # "helpful in Testing or for local-development purposes"
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [("127.0.0.1", 6379)],
+        },
     }
 }
 
