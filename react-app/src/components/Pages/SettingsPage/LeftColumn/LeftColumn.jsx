@@ -1,5 +1,5 @@
 import classes from "./LeftColumn.module.css"
-import profile_photo from "../../../../img/profile_photo.png"
+import profile_photo from "../../../../img/dummy_avatar.png"
 import DefaultButton from "../../../Button/DefaultButton"
 
 const LeftColumn = (props) => {
