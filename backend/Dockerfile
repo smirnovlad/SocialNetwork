@@ -15,3 +15,8 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 COPY . .
+
+# run entrypoint
+COPY ./entrypoint.sh /
+
+ENTRYPOINT ["sh", "/entrypoint.sh"]

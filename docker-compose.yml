@@ -1,26 +1,33 @@
-version: '3'
+version: '3.8'
 
 services:
   backend:
+    container_name: backend
     build:
       context: ./backend
-    command: gunicorn backend.wsgi --bind 0.0.0.0:8000
-    ports:
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    ports: # expose
       - "8000:8000"
+    volumes:
+      - static:/usr/src/app/static
   frontend:
+    container_name: frontend
     build:
       context: ./react-app
-    volumes:
-      - react_build:/react/build
-  nginx:
-    image: nginx:latest
-    ports:
-      - "80:8080"
-    volumes:
-      - ./nginx/nginx-setup.conf:/etc/nginx/conf.d/default.conf:ro
-      - react_build:/var/www/react
+    ports: # expose
+      - "3000:3000"
+    command: serve -s /usr/src/app/build -l 3000
     depends_on:
       - backend
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - static:/usr/src/app/static
+    depends_on:
       - frontend
 volumes:
-  react_build:
+  static:
