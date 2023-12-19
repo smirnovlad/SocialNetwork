@@ -57,7 +57,7 @@ CHANNEL_LAYERS = {
         # 'BACKEND': 'channels.layers.InMemoryChannelLayer' # "helpful in Testing or for local-development purposes"
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [("redis", 6379)],
         },
     }
 }
@@ -147,7 +147,11 @@ USE_TZ = True
 CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8000",
     "http://localhost:3000",
+    "http://localhost:80",
+    "http://localhost",
+    "http://asgiserver",
 ]
 
 

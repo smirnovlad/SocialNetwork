@@ -19,7 +19,7 @@ export const fetchFeedback = createAsyncThunk(
 
 export const postReview = async function(data) {
     let {token, review} = data
-    let url = `http://127.0.0.1:8000/messenger/api/v1/feedback/`
+    let url = `http://0.0.0.0:8000/messenger/api/v1/feedback/`
     let requestBody = {
         text: review
     }

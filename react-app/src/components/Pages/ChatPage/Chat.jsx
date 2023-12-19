@@ -29,7 +29,7 @@ const Chat = (props) => {
 
             const chatInfo = await fetchChatInfo({token, chatId});
 
-            const newSocket = new WebSocket(`ws://localhost:8000/ws/chat/${chatId}/`);
+            const newSocket = new WebSocket(`ws://0.0.0.0:9000/ws/chat/${chatId}/`);
 
             newSocket.onopen = () => {
                 console.log('WebSocket connection opened');
@@ -87,7 +87,6 @@ const Chat = (props) => {
         const chatId = params.chatid;
         const result = await postMessage({token, chatId, message});
         setMessage(""); // TODO: if request-success
-        setMessagesHistory([...messagesHistory, {name: "Me", ...result}]);
     }
 
     return (

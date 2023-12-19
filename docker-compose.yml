@@ -5,29 +5,53 @@ services:
     container_name: backend
     build:
       context: ./backend
+      dockerfile: ./Dockerfile
     command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
-    ports: # expose
-      - "8000:8000"
+    links:
+      - redis
+    ports:
+        - "8000:8000"
+
+  asgiserver:
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    container_name: asgiserver
+    command: daphne backend.asgi:application -b 0.0.0.0 -p 9000
+    links:
+      - redis
+    ports:
+      - "9000:9000"
     volumes:
       - static:/usr/src/app/static
+
   frontend:
     container_name: frontend
     build:
       context: ./react-app
-    ports: # expose
+    ports:
       - "3000:3000"
     command: serve -s /usr/src/app/build -l 3000
     depends_on:
       - backend
+
+  redis:
+    container_name: redis
+    image: redis:5
+    ports:
+      - "6378:6379"
+
   nginx:
     container_name: nginx
     build:
       context: ./nginx
     ports:
-      - "80:80"
+      - 80:80
     volumes:
       - static:/usr/src/app/static
     depends_on:
+      - backend
+      - asgiserver
       - frontend
 volumes:
   static:
