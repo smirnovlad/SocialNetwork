@@ -1,10 +1,11 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
+import {HOST} from "./config"
 
 export const fetchFeedback = createAsyncThunk(
     'fetchFeedback',
     async function (_, {rejectWithValue}) {
         try {
-            let url = `http://localhost:8000/messenger/api/v1/feedback`
+            let url = `http://${HOST}:8000/messenger/api/v1/feedback`
             const response = await fetch(url)
             if (!response.ok) {
                 throw new Error('Error')
@@ -19,7 +20,7 @@ export const fetchFeedback = createAsyncThunk(
 
 export const postReview = async function(data) {
     let {token, review} = data
-    let url = `http://localhost:8000/messenger/api/v1/feedback/`
+    let url = `http://${HOST}:8000/messenger/api/v1/feedback/`
     let requestBody = {
         text: review
     }

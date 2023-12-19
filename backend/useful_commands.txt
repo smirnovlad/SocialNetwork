@@ -16,3 +16,9 @@ Create superuser:
 python3 manage.py createsuperuser
 
 Docker:
+1.
+
+2.
+docker context create remoteContext --docker host=ssh://smirnovlad@158.160.114.187
+docker-compose --context remoteContext up -d
+docker context rm remoteContext

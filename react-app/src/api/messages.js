@@ -1,8 +1,9 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {fetchUserInfoHelper} from "./userInfo"
+import {HOST} from "./config"
 
 const fetchUserMessagesHelper = async function (token) {
-    let url = `http://localhost:8000/messenger/api/v1/messages/`
+    let url = `http://${HOST}:8000/messenger/api/v1/messages/`
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
@@ -65,7 +66,7 @@ export const fetchChatMessages = createAsyncThunk(
     async function (data, {rejectWithValue}) {
         try {
             let {token, chatId} = data
-            let url = `http://localhost:8000/messenger/api/v1/messages/`
+            let url = `http://${HOST}:8000/messenger/api/v1/messages/`
             const response = await fetch(url + '?' + new URLSearchParams({
                 chat_id: chatId
             }), {
@@ -87,7 +88,7 @@ export const fetchChatMessages = createAsyncThunk(
 
 export const fetchChatInfo = async function (data) {
     let {token, chatId} = data
-    let url = `http://localhost:8000/messenger/api/v1/chatlist/${chatId}`
+    let url = `http://${HOST}:8000/messenger/api/v1/chatlist/${chatId}`
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
@@ -104,7 +105,7 @@ export const fetchChatInfo = async function (data) {
 export const postMessage = async function (data) {
     let {token, message, chatId} = data
 
-    let url = `http://localhost:8000/messenger/api/v1/messages/`
+    let url = `http://${HOST}:8000/messenger/api/v1/messages/`
     let requestBody = {
         text: message,
         chat: chatId
@@ -126,7 +127,7 @@ export const postMessage = async function (data) {
 
 export const fetchChatList = async function (data) {
     let {token} = data
-    let url = `http://localhost:8000/messenger/api/v1/chatlist/`
+    let url = `http://${HOST}:8000/messenger/api/v1/chatlist/`
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
@@ -143,7 +144,7 @@ export const fetchChatList = async function (data) {
 export const createChat = async function (data) {
     let {token, senderUserId, secondUserId} = data
 
-    let url = `http://localhost:8000/messenger/api/v1/chatlist/`
+    let url = `http://${HOST}:8000/messenger/api/v1/chatlist/`
     let requestBody = {
         firstUser: senderUserId,
         secondUser: secondUserId

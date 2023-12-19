@@ -1,4 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
+import {HOST} from "./config"
 
 export const authorize = createAsyncThunk (
 'authorize',
@@ -9,7 +10,7 @@ export const authorize = createAsyncThunk (
                 username: login,
                 password: password
             }
-            let url = 'http://localhost:8000/messenger/auth/token/login'
+            let url = `http://${HOST}:8000/messenger/auth/token/login`
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {

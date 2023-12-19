@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {fetchFeedback, postReview} from "../../../api/feedback"
 import {fetchUserListInfo} from "../../../api/userInfo"
 import store from '../../../store/store'
-
+import {HOST} from "../../../api/config"
 
 const Feedback = (props) => {
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const Feedback = (props) => {
     const {id} = useSelector(state => state.authorizedUserInfo)
 
     useEffect(() => {
-        const newSocket = new WebSocket(`ws://localhost:9000/ws/feedback/`);
+        const newSocket = new WebSocket(`ws://${HOST}:9000/ws/feedback/`);
 
         newSocket.onopen = () => {
             console.log('WebSocket connection opened');
