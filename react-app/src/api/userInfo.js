@@ -4,7 +4,7 @@ export const fetchAuthorizedUserInfo = createAsyncThunk(
     'fetchAuthorizedUserData',
     async function (token, {rejectWithValue}) {
         try {
-            let url = `http://127.0.0.1:8000/messenger/api/v1/auth/users/me`
+            let url = `http://localhost:8000/messenger/api/v1/auth/users/me`
             const response = await fetch(url, {
                 headers: {'Authorization': `Token ${token}`}
             })
@@ -20,7 +20,7 @@ export const fetchAuthorizedUserInfo = createAsyncThunk(
 )
 
 export const fetchUserInfoHelper = async function(id) {
-    let url = `http://127.0.0.1:8000/messenger/api/v1/users/${id}`
+    let url = `http://localhost:8000/messenger/api/v1/users/${id}`
     const response = await fetch(url)
     if (!response.ok) {
         throw new Error('Error')
@@ -55,7 +55,7 @@ export const fetchAllUsersInfo = createAsyncThunk(
     'fetchAllUsersData',
     async function (_, {rejectWithValue}) {
         try {
-            let url = `http://127.0.0.1:8000/messenger/api/v1/users`
+            let url = `http://localhost:8000/messenger/api/v1/users`
             const response = await fetch(url)
             if (!response.ok) {
                 throw new Error('Error')
@@ -86,7 +86,7 @@ export const updateUserSettings = createAsyncThunk(
                 bornAt: birthDate,
                 homeTown: hometown
             }
-            let url = `http://127.0.0.1:8000/messenger/api/v1/users/${id}`
+            let url = `http://localhost:8000/messenger/api/v1/users/${id}`
             const response = await fetch(url, {
                 method: 'PATCH',
                 headers: {
@@ -114,7 +114,7 @@ export const updateUserFriendList = createAsyncThunk(
             let requestBody = {
                 friends: newFriendList
             }
-            let url = `http://127.0.0.1:8000/messenger/api/v1/auth/users/me/`
+            let url = `http://localhost:8000/messenger/api/v1/auth/users/me/`
             const response = await fetch(url, {
                 method: 'PATCH',
                 headers: {

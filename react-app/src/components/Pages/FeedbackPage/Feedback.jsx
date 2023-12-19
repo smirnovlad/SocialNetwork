@@ -20,7 +20,7 @@ const Feedback = (props) => {
     const {id} = useSelector(state => state.authorizedUserInfo)
 
     useEffect(() => {
-        const newSocket = new WebSocket(`ws://0.0.0.0:9000/ws/feedback/`);
+        const newSocket = new WebSocket(`ws://localhost:9000/ws/feedback/`);
 
         newSocket.onopen = () => {
             console.log('WebSocket connection opened');

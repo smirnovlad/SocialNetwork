@@ -9,7 +9,7 @@ export const authorize = createAsyncThunk (
                 username: login,
                 password: password
             }
-            let url = 'http://127.0.0.1:8000/messenger/auth/token/login'
+            let url = 'http://localhost:8000/messenger/auth/token/login'
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {

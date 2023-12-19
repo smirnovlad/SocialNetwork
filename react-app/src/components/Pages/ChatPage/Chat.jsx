@@ -29,7 +29,7 @@ const Chat = (props) => {
 
             const chatInfo = await fetchChatInfo({token, chatId});
 
-            const newSocket = new WebSocket(`ws://0.0.0.0:9000/ws/chat/${chatId}/`);
+            const newSocket = new WebSocket(`ws://localhost:9000/ws/chat/${chatId}/`);
 
             newSocket.onopen = () => {
                 console.log('WebSocket connection opened');
