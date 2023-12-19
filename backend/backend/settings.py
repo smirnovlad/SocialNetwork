@@ -147,16 +147,18 @@ CORS_ALLOW_CREDENTIALS = True
 
 HOST = "51.250.6.1"
 
-CORS_ALLOWED_ORIGINS = [
-    f"http://localhost:8000",
-    f"http://localhost:3000",
-    f"http://localhost:80",
-    f"http://localhost",
-    f"http://${HOST}:8000",
-    f"http://${HOST}:3000",
-    f"http://${HOST}:80",
-    f"http://${HOST}",
-]
+CORS_ORIGIN_ALLOW_ALL = True
+
+# CORS_ALLOWED_ORIGINS = [
+#     f"http://localhost:8000",
+#     f"http://localhost:3000",
+#     f"http://localhost:80",
+#     f"http://localhost",
+#     f"http://${HOST}:8000",
+#     f"http://${HOST}:3000",
+#     f"http://${HOST}:80",
+#     f"http://${HOST}",
+# ]
 
 
 # Static files (CSS, JavaScript, Images)
