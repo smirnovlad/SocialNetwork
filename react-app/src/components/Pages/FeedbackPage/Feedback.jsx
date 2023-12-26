@@ -83,6 +83,12 @@ const Feedback = (props) => {
         }
     }
 
+    const handleKeyDown = (e) => {
+        if (e.code === "Enter") {
+            onSendButtonClicked();
+        }
+    };
+
     useEffect(() => {
         if (scrollContainerRef.current) {
             scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
@@ -121,9 +127,9 @@ const Feedback = (props) => {
             </div>
 
             {id && <div style={{display: "flex", width: "92.5%", position: "absolute", bottom: 20}}>
-                <input value={review} placeholder={"Leave some feedback"} onChange={(e) => {
+                <input autoFocus value={review} placeholder={"Leave some feedback"} onChange={(e) => {
                     setReview(e.target.value)
-                }} style={{width: "100%", height: 35, float: "left", borderRadius: 10, textIndent: 10, fontSize: 24}}/>
+                }} onKeyDown={handleKeyDown} style={{width: "100%", height: 35, float: "left", borderRadius: 10, textIndent: 10, fontSize: 24}}/>
                 <div style={{width: "2%"}}></div>
                 <DefaultButton handler={onSendButtonClicked} text={"Send"} style={{
                     width: 100,

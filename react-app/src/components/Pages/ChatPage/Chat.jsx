@@ -90,6 +90,12 @@ const Chat = (props) => {
         setMessage(""); // TODO: if request-success
     }
 
+    const handleKeyDown = (e) => {
+        if (e.code === "Enter") {
+            sendMessage();
+        }
+    };
+
     return (
         <div className={classes.Chat}>
             <Link to={"/messages"} style={{textDecoration: "none"}}>
@@ -132,9 +138,9 @@ const Chat = (props) => {
             </div>
 
             <div style={{display: "flex", width: "92.5%", position: "absolute", bottom: 20}}>
-                <input value={message} onChange={(e) => {
+                <input autoFocus value={message} onChange={(e) => {
                     setMessage(e.target.value)
-                }} placeholder={"Write a message..."} style={{
+                }} onKeyDown={handleKeyDown} placeholder={"Write a message..."} style={{
                     width: "100%",
                     height: 35,
                     float: "left",
