@@ -4,7 +4,7 @@ import Message from "../../Message/Message"
 import {fetchChatInfo, fetchChatMessages, postMessage} from "../../../api/messages"
 import {fetchUserInfo} from "../../../api/userInfo"
 import store from '../../../store/store'
-import {HOST} from "../../../api/config"
+import {HOST, WS_PORT} from "../../../api/config"
 
 import {Text} from 'react-native'
 import {useDispatch} from "react-redux"
@@ -30,7 +30,7 @@ const Chat = (props) => {
 
             const chatInfo = await fetchChatInfo({token, chatId});
 
-            const newSocket = new WebSocket(`ws://${HOST}:9000/ws/chat/${chatId}/`);
+            const newSocket = new WebSocket(`ws://${HOST}:${WS_PORT}/ws/chat/${chatId}/`);
 
             newSocket.onopen = () => {
                 console.log('WebSocket connection opened');
