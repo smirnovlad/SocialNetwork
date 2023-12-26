@@ -30,33 +30,48 @@ export const fetchUserMessages = createAsyncThunk(
 
 export const fetchChatsPreviewInfo = async function (data) {
     let {userId, token} = data;
-    let chatsInfo = []
-    let usedChats = []
+    let chatsInfo = {}
 
     const userMessages = await fetchUserMessagesHelper(token);
 
-    const userPromises = userMessages.map(async (message) => {
-        if (!usedChats.includes(message.chat)) {
-            usedChats.push(message.chat);
-            let secondUserId = userId === message.receiver ? message.sender : message.receiver;
-            const secondUserInfo = await fetchUserInfoHelper(secondUserId);
-
-            return {
-                chatId: message.chat,
-                message: {
-                    receiver: message.receiver,
-                    sender: message.sender,
-                    text: message.text,
-                    timestamp: message.timestamp,
-                    name: secondUserInfo.first_name + " " + secondUserInfo.last_name
-                }
-            };
+    for (let message of userMessages) {
+        if (Object.keys(chatsInfo).includes(message.chat)) {
+            let currentChatInfo = chatsInfo[message.chat];
+            if (currentChatInfo.timestamp > message.timestamp) {
+                chatsInfo[message.chat] = message;
+            }
+        } else {
+            chatsInfo[message.chat] = message;
         }
+    }
+
+    chatsInfo = Object.values(chatsInfo);
+
+    const userPromises = chatsInfo.map(async (info) => {
+        let chatId = info.chat;
+        let previewMessage = info;
+        let secondUserId = userId === previewMessage.receiver ? previewMessage.sender : previewMessage.receiver;
+        const secondUserInfo = await fetchUserInfoHelper(secondUserId);
+
+        return {
+            chatId: chatId,
+            message: {
+                receiver: previewMessage.receiver,
+                sender: previewMessage.sender,
+                text: previewMessage.text,
+                timestamp: previewMessage.timestamp,
+                name: secondUserInfo.first_name + " " + secondUserInfo.last_name
+            }
+        };
     });
 
-    // TODO: run promises sequentially to order message (we need to save the most recent)
-    const resolvedUsers = await Promise.all(userPromises);
-    chatsInfo = resolvedUsers.filter((info) => info !== undefined);
+    chatsInfo = await Promise.all(userPromises);
+
+    chatsInfo.sort(function(first, second)  {
+        return first.message.timestamp < second.message.timestamp ? 1 : -1;
+    })
+
+    console.log(chatsInfo);
 
     return chatsInfo
 }
