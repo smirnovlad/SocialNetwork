@@ -149,6 +149,7 @@ HOST = "51.250.6.1"
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+# TODO: fix
 # CORS_ALLOWED_ORIGINS = [
 #     f"http://localhost:8000",
 #     f"http://localhost:3000",
