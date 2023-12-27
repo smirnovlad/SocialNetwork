@@ -12,8 +12,6 @@ const messagesDataSlice = createSlice({
     extraReducers: {
         [fetchUserMessages.fulfilled]: (state, action) => {
             state.messagesInfo = action.payload;
-
-            // console.log(state.messages);
         },
     }
 })

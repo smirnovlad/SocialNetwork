@@ -5,8 +5,6 @@ export const register = createAsyncThunk (
 'register',
     async function (data, {rejectWithValue}) {
         try {
-            console.log("reg data: ", data)
-
             let requestBody = {
                 first_name: data.first_name,
                 last_name: data.last_name,
@@ -16,7 +14,6 @@ export const register = createAsyncThunk (
                 homeTown: data.hometown,
                 re_password: data.confirm_password
             }
-            // // console.log(requestBody)
             let url = `http://${HOST}:8000/messenger/api/v1/auth/users/`
             const response = await fetch(url, {
                 method: 'POST',

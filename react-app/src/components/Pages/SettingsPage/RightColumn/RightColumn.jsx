@@ -11,21 +11,20 @@ const RightColumn = (props) => {
     const dispatch = useDispatch();
 
     const authorizedUserInfo = store.getState().authorizedUserInfo;
-    const username = authorizedUserInfo.username
+    const username = authorizedUserInfo.username;
     const name = authorizedUserInfo.first_name + " " + authorizedUserInfo.last_name;
-    const [hometown, setHometown] = useState(authorizedUserInfo.hometown)
-    const [birthDate, setBirthDate] = useState(authorizedUserInfo.birth_date)
+    const [hometown, setHometown] = useState(authorizedUserInfo.hometown);
+    const [birthDate, setBirthDate] = useState(authorizedUserInfo.birth_date);
 
     const textStyle = {margin: "10%", fontSize: 24};
     const immutableDatas = [
         {text: "Login: ", value: username}
     ]
     const mutableDatas = [
-        {text: "Birth date ", onChange: setBirthDate, value: birthDate},
-        {text: "Hometown ", onChange: setHometown, value: hometown},
+        {text: "Birth date ", onChange: setBirthDate, value: birthDate, placeholder: authorizedUserInfo.birth_date},
+        {text: "Hometown ", onChange: setHometown, value: hometown, placeholder: authorizedUserInfo.hometown},
     ]
     const saveSettings = async function () {
-        console.log("Birth date: ", birthDate, ", hometown: ", hometown);
         const token = authorizedUserInfo.token;
         const id = store.getState().authorizedUserInfo.id;
         dispatch(updateUserSettings({token, id, birthDate, hometown})).unwrap()
@@ -52,7 +51,7 @@ const RightColumn = (props) => {
              { mutableDatas.map((data, index) =>
                 <div key={index} style={{marginLeft: "10%"}}>
                     <div style={{height: 5}}></div>
-                    <InputLine data={{text: data.text}} onChange={e => data.onChange(e.target.value)} style={{width: "70%"}} placeholder={data.value}/>
+                    <InputLine data={{text: data.text}} onChange={e => data.onChange(e.target.value)} style={{width: "70%"}} placeholder={data.placeholder}/>
                 </div>) }
             <div style={{height: 5}}></div>
             <DefaultButton handler={saveSettings} text={"Save"} style={{width: "40%", height: 36, float: "right", backgroundColor: "#447BBA", color: "white"}}/>

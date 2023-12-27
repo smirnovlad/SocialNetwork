@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {fetchAuthorizedUserInfo, updateUserSettings, updateUserFriendList} from "../api/userInfo"
 import {authorize} from "../api/authorization"
+import {updateAvatar} from "../api/media"
 
 const authorizedUserInfoSlice = createSlice({
     name: 'authorizedUserInfo',
@@ -9,6 +10,7 @@ const authorizedUserInfoSlice = createSlice({
         username: '',
         first_name: '',
         last_name: '',
+        avatar: null,
         friends: [],
         birth_date: '',
         hometown: '',
@@ -27,6 +29,7 @@ const authorizedUserInfoSlice = createSlice({
             state.username = action.payload.username
             state.first_name = action.payload.first_name
             state.last_name = action.payload.last_name
+            state.avatar = action.payload.avatar
             state.friends = action.payload.friends
             state.birth_date = action.payload.bornAt
             state.hometown = action.payload.homeTown
@@ -45,6 +48,9 @@ const authorizedUserInfoSlice = createSlice({
         [updateUserFriendList.fulfilled]: (state, action) => {
             state.friends = action.payload.friends
         },
+        [updateAvatar.fulfilled]: (state, action) => {
+            state.avatar = action.payload.avatar
+        }
     }
 })
 

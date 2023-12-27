@@ -1,5 +1,4 @@
 import classes from "./LeftColumn.module.css"
-import profile_photo from "../../../../img/dummy_avatar.png"
 import DefaultButton from "../../../Button/DefaultButton"
 import MessageButton from "../../../Button/MessageButton"
 import {useSelector} from "react-redux"
@@ -14,6 +13,7 @@ const LeftColumn = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const {id, friends} = useSelector(state => state.authorizedUserInfo);
+    const {avatar} = useSelector(state => state.currentProfileData)
     const params = useParams();
 
     const [buttonProps, setButtonProps] = useState({
@@ -96,8 +96,8 @@ const LeftColumn = (props) => {
 
     return (
         <div className={classes.LeftColumn}>
-            <img src={profile_photo} style={{borderRadius: 10, width: "100%", height: "85%", float: "left"}}
-                 alt={"dummy_avatar"}/>
+            <img src={avatar} style={{borderRadius: 10, width: "100%", height: "85%", float: "left"}}
+                 alt={"profile_photo"}/>
             {(id && props.data.id != id) && <div>
                 <DefaultButton handler={buttonProps.handler} text={buttonProps.text} style={{
                     width: "70%",
@@ -108,7 +108,8 @@ const LeftColumn = (props) => {
                     backgroundColor: buttonProps.backgroundColor,
                     color: "white"
                 }}/>
-                <MessageButton onClick={openChat} style={{width: "20%", height: 36, float: "right", position: "relative", top: 10}}/>
+                <MessageButton onClick={openChat}
+                               style={{width: "20%", height: 36, float: "right", position: "relative", top: 10}}/>
             </div>}
         </div>
     )

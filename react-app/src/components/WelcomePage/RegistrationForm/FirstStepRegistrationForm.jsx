@@ -13,7 +13,7 @@ const FirstStepRegistrationForm = (props) => {
     const data = [
         {text: "First name", onChange: setFirstName, type: "text", value: firstName},
         {text: "Last name", onChange: setLastName, type: "text", value: lastName},
-        {text: "Birth date", onChange: setBirthData, type: "text", value: birthDate},
+        {text: "Birth date", onChange: setBirthData, type: "text", value: birthDate, placeholder: "YYYY-MM-DD"},
         {text: "Hometown", onChange: setHomeTown, type: "text", value: homeTown},
     ]
 

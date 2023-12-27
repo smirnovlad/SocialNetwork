@@ -10,7 +10,9 @@ const BaseForm = ({datas, buttons, id}) => {
                     <InputLine
                         onChange={e => data.onChange(e.target.value)}
                         value={data.value}
-                        data={{text: data.text, type: data.type}} />
+                        data={{text: data.text, type: data.type}}
+                        placeholder={data.placeholder}
+                    />
                     <div style={{height: 3}}></div>
                 </div>) }
 

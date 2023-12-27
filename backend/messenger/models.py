@@ -7,7 +7,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=30)
     bornAt = models.DateField()
     homeTown = models.CharField(max_length=30)
-    avatar = models.ImageField(upload_to="uploads/avatars/", blank=True)
+    avatar = models.ImageField(upload_to="uploads/avatars/", default="uploads/avatars/default_avatar.png")
     friends = models.ManyToManyField("self", symmetrical=False, blank=True)
     REQUIRED_FIELDS = ['first_name', 'last_name', 'bornAt', 'homeTown']
 
@@ -15,6 +15,11 @@ class User(AbstractUser):
     def friendlist(self):
         # Watch for large querysets: it loads everything in memory
         return list(self.friends.all())
+
+    def save(self, *args, **kwargs):
+        if not self.avatar:
+            self.avatar = "uploads/avatars/default_avatar.png"
+        super(User, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"Username: {self.username}, first name: {self.first_name}, last name: {self.last_name}"

@@ -21,9 +21,11 @@ const RegistrationForm = (props) => {
         const registrationData = store.getState().registrationData
         dispatch(register(registrationData)).unwrap()
             .then((originalPromiseResult) => {
+                alert("You have successfully registered!")
                 props.onRegistrationSuccess();
             })
             .catch((rejectedValueOrSerializedError) => {
+                alert(rejectedValueOrSerializedError.message);
                 console.log(rejectedValueOrSerializedError);
             })
     }

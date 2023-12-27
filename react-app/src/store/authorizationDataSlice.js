@@ -11,7 +11,7 @@ const authorizationDataSlice = createSlice({
     },
     reducers: {
         logIn(state, action) {
-            state.username = action.payload.login;
+            state.username = action.payload.username;
             state.password = action.payload.password;
         }
     },
