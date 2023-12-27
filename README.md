@@ -14,17 +14,22 @@
 ## How to build
 ### Locally
 Для начала необходимо обновить константы в `backend/backend/settings.py` и `react-app/src/api/config.js`, соответствующие хосту и портам.
-1. Поднять сервер из директории backend:
+1. Применить миграции к моделям данных из директории backend:
+```
+python3 manage.py migrate
+```
+
+2. Поднять сервер из директории backend:
 ```
 python3 manage.py runserver
 ```
 
-2. Запустить докер-контейнер для работы сокетов с Redis channels:
+3. Запустить докер-контейнер для работы сокетов с Redis channels:
 ```
 docker run -p 6379:6379 -d redis:5
 ```
 
-3. Запустить реакт-приложение из директории react-app:
+4. Запустить реакт-приложение из директории react-app:
 ```
 npm install
 npm start
