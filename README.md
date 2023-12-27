@@ -11,6 +11,25 @@
     <li> Возможность оставить отзыв о сайте
 </ol>
 
+## How to build
+### Locally
+Для начала необходимо обновить константы в `backend/backend/settings.py` и `react-app/src/api/config.js`, соответствующие хосту и портам.
+1. Поднять сервер из директории backend:
+```
+python3 manage.py runserver
+```
+
+2. Запустить докер-контейнер для работы сокетов с Redis channels:
+```
+docker run -p 6379:6379 -d redis:5
+```
+
+3. Запустить реакт-приложение из директории react-app:
+```
+npm install
+npm start
+```
+
 ## Макет веб-приложения
 
 [Design in Figma](https://www.figma.com/file/hlFAIfFrGb8HHlGH0B2Uy7/HuaoMao?type=design&node-id=0-1&mode=design&t=LrnYanTZAVLeXxYG-0)

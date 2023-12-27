@@ -7,7 +7,7 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import Message, Feedback
 from .serializers import MessageSerializer, FeedbackSerializer
-
+import logging
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.chat_id = self.scope['url_route']['kwargs']['chat_id']
@@ -90,7 +90,7 @@ class FeedbackConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             self.group_name,
             {
-                'type': 'chat.message',
+                'type': 'feedback_review',
                 'review': review
             }
         )

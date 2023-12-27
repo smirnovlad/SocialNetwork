@@ -4,6 +4,7 @@ import Message from "../../Message/Message"
 import {fetchChatInfo, fetchChatMessages, postMessage} from "../../../api/messages"
 import {fetchUserInfo} from "../../../api/userInfo"
 import store from '../../../store/store'
+import {HOST, WS_PORT} from "../../../api/config"
 
 import {Text} from 'react-native'
 import {useDispatch} from "react-redux"
@@ -29,7 +30,7 @@ const Chat = (props) => {
 
             const chatInfo = await fetchChatInfo({token, chatId});
 
-            const newSocket = new WebSocket(`ws://localhost:8000/ws/chat/${chatId}/`);
+            const newSocket = new WebSocket(`ws://${HOST}:${WS_PORT}/ws/chat/${chatId}/`);
 
             newSocket.onopen = () => {
                 console.log('WebSocket connection opened');
@@ -87,8 +88,13 @@ const Chat = (props) => {
         const chatId = params.chatid;
         const result = await postMessage({token, chatId, message});
         setMessage(""); // TODO: if request-success
-        setMessagesHistory([...messagesHistory, {name: "Me", ...result}]);
     }
+
+    const handleKeyDown = (e) => {
+        if (e.code === "Enter") {
+            sendMessage();
+        }
+    };
 
     return (
         <div className={classes.Chat}>
@@ -132,9 +138,9 @@ const Chat = (props) => {
             </div>
 
             <div style={{display: "flex", width: "92.5%", position: "absolute", bottom: 20}}>
-                <input value={message} onChange={(e) => {
+                <input autoFocus value={message} onChange={(e) => {
                     setMessage(e.target.value)
-                }} placeholder={"Write a message..."} style={{
+                }} onKeyDown={handleKeyDown} placeholder={"Write a message..."} style={{
                     width: "100%",
                     height: 35,
                     float: "left",

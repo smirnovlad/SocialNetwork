@@ -1,8 +1,9 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {fetchUserInfoHelper} from "./userInfo"
+import {HOST} from "./config"
 
 const fetchUserMessagesHelper = async function (token) {
-    let url = `http://127.0.0.1:8000/messenger/api/v1/messages/`
+    let url = `http://${HOST}:8000/messenger/api/v1/messages/`
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
@@ -19,53 +20,49 @@ export const fetchUserMessages = createAsyncThunk(
     'fetchUserMessages',
     async function (data, {rejectWithValue}) {
         try {
-            let {token} = data;
-            return await fetchUserMessagesHelper(token)
+            let {userId, token} = data;
+            let secondUserInfo = {}
+            let messagesInfo =  await fetchUserMessagesHelper(token);
+
+            const userPromises = messagesInfo.map(async (info) => {
+                let chatId = info.chat;
+                let previewMessage = info;
+                let secondUserId = userId === previewMessage.receiver ? previewMessage.sender : previewMessage.receiver;
+                if (!(secondUserId in secondUserInfo)) {
+                    secondUserInfo[secondUserId] = await fetchUserInfoHelper(secondUserId);
+                }
+
+                return {
+                    chatId: chatId,
+                    message: {
+                        receiver: previewMessage.receiver,
+                        sender: previewMessage.sender,
+                        text: previewMessage.text,
+                        timestamp: previewMessage.timestamp,
+                        name: secondUserInfo[secondUserId].first_name + " " + secondUserInfo[secondUserId].last_name
+                    }
+                };
+            });
+
+            messagesInfo = await Promise.all(userPromises);
+
+            messagesInfo.sort(function(first, second)  {
+                return first.message.timestamp < second.message.timestamp ? 1 : -1;
+            })
+
+            return messagesInfo;
         } catch (error) {
             return rejectWithValue(error.message)
         }
     }
 )
 
-export const fetchChatsPreviewInfo = async function (data) {
-    let {userId, token} = data;
-    let chatsInfo = []
-    let usedChats = []
-
-    const userMessages = await fetchUserMessagesHelper(token);
-
-    const userPromises = userMessages.map(async (message) => {
-        if (!usedChats.includes(message.chat)) {
-            usedChats.push(message.chat);
-            let secondUserId = userId === message.receiver ? message.sender : message.receiver;
-            const secondUserInfo = await fetchUserInfoHelper(secondUserId);
-
-            return {
-                chatId: message.chat,
-                message: {
-                    receiver: message.receiver,
-                    sender: message.sender,
-                    text: message.text,
-                    timestamp: message.timestamp,
-                    name: secondUserInfo.first_name + " " + secondUserInfo.last_name
-                }
-            };
-        }
-    });
-
-    // TODO: run promises sequentially to order message (we need to save the most recent)
-    const resolvedUsers = await Promise.all(userPromises);
-    chatsInfo = resolvedUsers.filter((info) => info !== undefined);
-
-    return chatsInfo
-}
-
 export const fetchChatMessages = createAsyncThunk(
     'fetchChatMessages',
     async function (data, {rejectWithValue}) {
         try {
             let {token, chatId} = data
-            let url = `http://127.0.0.1:8000/messenger/api/v1/messages/`
+            let url = `http://${HOST}:8000/messenger/api/v1/messages/`
             const response = await fetch(url + '?' + new URLSearchParams({
                 chat_id: chatId
             }), {
@@ -87,7 +84,7 @@ export const fetchChatMessages = createAsyncThunk(
 
 export const fetchChatInfo = async function (data) {
     let {token, chatId} = data
-    let url = `http://127.0.0.1:8000/messenger/api/v1/chatlist/${chatId}`
+    let url = `http://${HOST}:8000/messenger/api/v1/chatlist/${chatId}`
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
@@ -104,7 +101,7 @@ export const fetchChatInfo = async function (data) {
 export const postMessage = async function (data) {
     let {token, message, chatId} = data
 
-    let url = `http://127.0.0.1:8000/messenger/api/v1/messages/`
+    let url = `http://${HOST}:8000/messenger/api/v1/messages/`
     let requestBody = {
         text: message,
         chat: chatId
@@ -126,7 +123,7 @@ export const postMessage = async function (data) {
 
 export const fetchChatList = async function (data) {
     let {token} = data
-    let url = `http://127.0.0.1:8000/messenger/api/v1/chatlist/`
+    let url = `http://${HOST}:8000/messenger/api/v1/chatlist/`
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
@@ -143,7 +140,7 @@ export const fetchChatList = async function (data) {
 export const createChat = async function (data) {
     let {token, senderUserId, secondUserId} = data
 
-    let url = `http://127.0.0.1:8000/messenger/api/v1/chatlist/`
+    let url = `http://${HOST}:8000/messenger/api/v1/chatlist/`
     let requestBody = {
         firstUser: senderUserId,
         secondUser: secondUserId

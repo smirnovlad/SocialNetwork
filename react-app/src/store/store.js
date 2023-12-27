@@ -1,6 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authorizationDataSlice from "./authorizationDataSlice"
-import registrationDataSlice from './registrationDataSlice'
 import rootReducer from "./reducer"
 
 const store = configureStore({

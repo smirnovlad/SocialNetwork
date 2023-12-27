@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {fetchFeedback, postReview} from "../../../api/feedback"
 import {fetchUserListInfo} from "../../../api/userInfo"
 import store from '../../../store/store'
-
+import {HOST, WS_PORT} from "../../../api/config"
 
 const Feedback = (props) => {
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const Feedback = (props) => {
     const {id} = useSelector(state => state.authorizedUserInfo)
 
     useEffect(() => {
-        const newSocket = new WebSocket(`ws://localhost:8000/ws/feedback/`);
+        const newSocket = new WebSocket(`ws://${HOST}:${WS_PORT}/ws/feedback/`);
 
         newSocket.onopen = () => {
             console.log('WebSocket connection opened');
@@ -83,6 +83,12 @@ const Feedback = (props) => {
         }
     }
 
+    const handleKeyDown = (e) => {
+        if (e.code === "Enter") {
+            onSendButtonClicked();
+        }
+    };
+
     useEffect(() => {
         if (scrollContainerRef.current) {
             scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
@@ -121,9 +127,9 @@ const Feedback = (props) => {
             </div>
 
             {id && <div style={{display: "flex", width: "92.5%", position: "absolute", bottom: 20}}>
-                <input value={review} placeholder={"Leave some feedback"} onChange={(e) => {
+                <input autoFocus value={review} placeholder={"Leave some feedback"} onChange={(e) => {
                     setReview(e.target.value)
-                }} style={{width: "100%", height: 35, float: "left", borderRadius: 10, textIndent: 10, fontSize: 24}}/>
+                }} onKeyDown={handleKeyDown} style={{width: "100%", height: 35, float: "left", borderRadius: 10, textIndent: 10, fontSize: 24}}/>
                 <div style={{width: "2%"}}></div>
                 <DefaultButton handler={onSendButtonClicked} text={"Send"} style={{
                     width: 100,

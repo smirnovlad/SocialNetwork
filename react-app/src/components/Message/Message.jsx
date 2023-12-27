@@ -6,6 +6,19 @@ function ConditionalLink({ children, condition, ...props }) {
     return !!condition && props.to ? <Link {...props}>{children}</Link> : <>{children}</>
 }
 
+function formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const hours = date.getHours();
+    const minutes = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+
+    const formattedTimestamp = `${day} ${month}, ${hours}:${minutes}`;
+
+    return formattedTimestamp;
+}
+
 const Message = ({type, data}) => {
     return (
         <div className={classes.Message}>
@@ -15,7 +28,7 @@ const Message = ({type, data}) => {
                 </a>
             </ConditionalLink>
             <Text style={{float: "right", color: "#818C99", paddingRight: "10px"}}>
-                {data.timestamp}
+                {formatTimestamp(data.timestamp)}
             </Text>
             <div style={{height:5}}></div>
             <Text>

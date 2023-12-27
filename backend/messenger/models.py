@@ -9,7 +9,7 @@ class User(AbstractUser):
     homeTown = models.CharField(max_length=30)
     avatar = models.ImageField(upload_to="uploads/avatars/", blank=True)
     friends = models.ManyToManyField("self", symmetrical=False, blank=True)
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'bornAt', 'homeTown', 'friends']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'bornAt', 'homeTown']
 
     @property
     def friendlist(self):
@@ -33,7 +33,7 @@ class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Sender login: {self.sender.login}, receiver login: {self.receiver.login}, message: {self.text}"
+        return f"Sender login: {self.sender.username}, receiver login: {self.receiver.username}, message: {self.text}"
 
 class Feedback(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -41,4 +41,4 @@ class Feedback(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Sender login: {self.sender.login}, message: {self.message}"
+        return f"Sender login: {self.sender.username}, message: {self.text}"

@@ -1,5 +1,5 @@
 import classes from "./LeftColumn.module.css"
-import profile_photo from "../../../../img/profile_photo.png"
+import profile_photo from "../../../../img/dummy_avatar.png"
 import DefaultButton from "../../../Button/DefaultButton"
 import MessageButton from "../../../Button/MessageButton"
 import {useSelector} from "react-redux"
@@ -97,7 +97,7 @@ const LeftColumn = (props) => {
     return (
         <div className={classes.LeftColumn}>
             <img src={profile_photo} style={{borderRadius: 10, width: "100%", height: "85%", float: "left"}}
-                 alt={"profile_photo"}/>
+                 alt={"dummy_avatar"}/>
             {(id && props.data.id != id) && <div>
                 <DefaultButton handler={buttonProps.handler} text={buttonProps.text} style={{
                     width: "70%",

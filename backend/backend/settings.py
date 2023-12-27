@@ -21,17 +21,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8c+mdc%t6g^a*km4byh=$pb5ukp4zww5z-7k&=#hi!#e(a=oyk'
+# SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY='django-insecure-8c+mdc%t6g^a*km4byh=$pb5ukp4zww5z-7k&=#hi!#e(a=oyk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = os.getenv('DEBUG')
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*'
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'channels',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,24 +46,28 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'messenger.apps.MessengerConfig',
     'rest_framework',
-    'corsheaders',
     'rest_framework.authtoken',
     'djoser',
 ]
 
 ASGI_APPLICATION = 'backend.asgi.application'
 
+REDIS_HOST = "127.0.0.1" # "redis"
+
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+        # 'BACKEND': 'channels.layers.InMemoryChannelLayer' # "helpful in Testing or for local-development purposes"
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [(f"{REDIS_HOST}", 6379)],
+        },
     }
 }
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -136,17 +145,30 @@ USE_I18N = True
 
 USE_TZ = True
 
-CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_CREDENTIALS = True
 
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-]
+HOST = "51.250.6.1"
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+# TODO: fix
+# CORS_ALLOWED_ORIGINS = [
+#     f"http://localhost:8000",
+#     f"http://localhost:3000",
+#     f"http://localhost:80",
+#     f"http://localhost",
+#     f"http://${HOST}:8000",
+#     f"http://${HOST}:3000",
+#     f"http://${HOST}:80",
+#     f"http://${HOST}",
+# ]
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -160,5 +182,9 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = "messenger.User"
 
 DJOSER = {
-    'USER_CREATE_PASSWORD_RETYPE': True
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'SERIALIZERS': {
+        'user': 'messenger.serializers.UserSerializer',
+        'current_user': 'messenger.serializers.UserSerializer',
+    }
 }
