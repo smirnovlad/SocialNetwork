@@ -47,7 +47,6 @@ class MessageAPIViews(mixins.ListModelMixin, CustomInstanceAPIViews):
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
-            # TODO: check if sender is participant of chat
             chat_id = request.data.get('chat')
             chat_instance = get_object_or_404(Chat, id=chat_id)
             firstUserId = chat_instance.firstUser.id

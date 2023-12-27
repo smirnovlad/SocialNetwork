@@ -18,8 +18,8 @@ const UserList = (type) => {
         async function getUsersInfo() {
             let data = [];
             if (type.type === "friends") {
-                let authorizedIUserInfo = store.getState().authorizedUserInfo;
-                data = await fetchUserListInfo(authorizedIUserInfo.friends);
+                let authorizedUserInfo = store.getState().authorizedUserInfo;
+                data = await fetchUserListInfo(authorizedUserInfo.friends);
                 setUsersInfo(data)
             } else {
                 dispatch(fetchAllUsersInfo())
