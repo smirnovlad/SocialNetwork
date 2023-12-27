@@ -47,7 +47,8 @@ const UserList = (type) => {
                 <Text style={{fontSize: 36}}> {title} </Text>
             </div>
             <br/>
-            <input onChange={e => setSearchRequest(e.target.value)} placeholder={"Search users"}
+            <input onChange={e => setSearchRequest(e.target.value)}
+                   placeholder={"Search users"}
                    style={{width: "70%", borderRadius: 10, height: 35, textIndent: 10, fontSize: 24,}}/>
             <div style={{height: 21}}></div>
 

@@ -20,61 +20,42 @@ export const fetchUserMessages = createAsyncThunk(
     'fetchUserMessages',
     async function (data, {rejectWithValue}) {
         try {
-            let {token} = data;
-            return await fetchUserMessagesHelper(token)
+            let {userId, token} = data;
+            let secondUserInfo = {}
+            let messagesInfo =  await fetchUserMessagesHelper(token);
+
+            const userPromises = messagesInfo.map(async (info) => {
+                let chatId = info.chat;
+                let previewMessage = info;
+                let secondUserId = userId === previewMessage.receiver ? previewMessage.sender : previewMessage.receiver;
+                if (!(secondUserId in secondUserInfo)) {
+                    secondUserInfo[secondUserId] = await fetchUserInfoHelper(secondUserId);
+                }
+
+                return {
+                    chatId: chatId,
+                    message: {
+                        receiver: previewMessage.receiver,
+                        sender: previewMessage.sender,
+                        text: previewMessage.text,
+                        timestamp: previewMessage.timestamp,
+                        name: secondUserInfo[secondUserId].first_name + " " + secondUserInfo[secondUserId].last_name
+                    }
+                };
+            });
+
+            messagesInfo = await Promise.all(userPromises);
+
+            messagesInfo.sort(function(first, second)  {
+                return first.message.timestamp < second.message.timestamp ? 1 : -1;
+            })
+
+            return messagesInfo;
         } catch (error) {
             return rejectWithValue(error.message)
         }
     }
 )
-
-export const fetchChatsPreviewInfo = async function (data) {
-    let {userId, token} = data;
-    let chatsInfo = {}
-
-    const userMessages = await fetchUserMessagesHelper(token);
-
-    for (let message of userMessages) {
-        if (Object.keys(chatsInfo).includes(message.chat)) {
-            let currentChatInfo = chatsInfo[message.chat];
-            if (currentChatInfo.timestamp > message.timestamp) {
-                chatsInfo[message.chat] = message;
-            }
-        } else {
-            chatsInfo[message.chat] = message;
-        }
-    }
-
-    chatsInfo = Object.values(chatsInfo);
-
-    const userPromises = chatsInfo.map(async (info) => {
-        let chatId = info.chat;
-        let previewMessage = info;
-        let secondUserId = userId === previewMessage.receiver ? previewMessage.sender : previewMessage.receiver;
-        const secondUserInfo = await fetchUserInfoHelper(secondUserId);
-
-        return {
-            chatId: chatId,
-            message: {
-                receiver: previewMessage.receiver,
-                sender: previewMessage.sender,
-                text: previewMessage.text,
-                timestamp: previewMessage.timestamp,
-                name: secondUserInfo.first_name + " " + secondUserInfo.last_name
-            }
-        };
-    });
-
-    chatsInfo = await Promise.all(userPromises);
-
-    chatsInfo.sort(function(first, second)  {
-        return first.message.timestamp < second.message.timestamp ? 1 : -1;
-    })
-
-    console.log(chatsInfo);
-
-    return chatsInfo
-}
 
 export const fetchChatMessages = createAsyncThunk(
     'fetchChatMessages',
