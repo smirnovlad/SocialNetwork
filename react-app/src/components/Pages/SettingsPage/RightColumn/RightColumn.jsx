@@ -11,10 +11,10 @@ const RightColumn = (props) => {
     const dispatch = useDispatch();
 
     const authorizedUserInfo = store.getState().authorizedUserInfo;
-    const username = authorizedUserInfo.username
+    const username = authorizedUserInfo.username;
     const name = authorizedUserInfo.first_name + " " + authorizedUserInfo.last_name;
-    const [hometown, setHometown] = useState(authorizedUserInfo.hometown)
-    const [birthDate, setBirthDate] = useState(authorizedUserInfo.birth_date)
+    const [hometown, setHometown] = useState(authorizedUserInfo.hometown);
+    const [birthDate, setBirthDate] = useState(authorizedUserInfo.birth_date);
 
     const textStyle = {margin: "10%", fontSize: 24};
     const immutableDatas = [

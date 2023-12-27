@@ -185,6 +185,6 @@ DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
     'SERIALIZERS': {
         'user': 'messenger.serializers.UserSerializer',
-        'current_user': 'messenger.serializers.UserSerializer',
+        'current_user': 'messenger.serializers.AuthorizedUserSerializer',
     }
 }
