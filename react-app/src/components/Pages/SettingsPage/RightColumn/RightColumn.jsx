@@ -25,7 +25,6 @@ const RightColumn = (props) => {
         {text: "Hometown ", onChange: setHometown, value: hometown, placeholder: authorizedUserInfo.hometown},
     ]
     const saveSettings = async function () {
-        console.log("Birth date: ", birthDate, ", hometown: ", hometown);
         const token = authorizedUserInfo.token;
         const id = store.getState().authorizedUserInfo.id;
         dispatch(updateUserSettings({token, id, birthDate, hometown})).unwrap()

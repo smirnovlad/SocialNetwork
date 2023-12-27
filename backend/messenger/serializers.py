@@ -5,12 +5,12 @@ from .models import User, Message, Feedback, Chat
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'bornAt', 'homeTown', 'friends')
+        fields = ('id', 'first_name', 'last_name', 'bornAt', 'homeTown', 'avatar', 'friends')
 
 class AuthorizedUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'bornAt', 'homeTown', 'friends')
+        fields = ('id', 'username', 'first_name', 'last_name', 'bornAt', 'homeTown', 'avatar', 'friends')
 
 
 class MessageSerializer(serializers.ModelSerializer):

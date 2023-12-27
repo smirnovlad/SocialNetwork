@@ -14,7 +14,6 @@ export const register = createAsyncThunk (
                 homeTown: data.hometown,
                 re_password: data.confirm_password
             }
-            // // console.log(requestBody)
             let url = `http://${HOST}:8000/messenger/api/v1/auth/users/`
             const response = await fetch(url, {
                 method: 'POST',

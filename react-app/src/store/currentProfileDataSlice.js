@@ -7,6 +7,7 @@ const currentProfileDataSlice = createSlice({
         "id": '',
         "first_name": '',
         "last_name": '',
+        "avatar": null,
         "hometown": '',
         "birth_date": ''
     },
@@ -18,6 +19,7 @@ const currentProfileDataSlice = createSlice({
             state.id = action.payload.id
             state.first_name = action.payload.first_name
             state.last_name = action.payload.last_name
+            state.avatar = action.payload.avatar
             state.hometown = action.payload.homeTown
             state.birth_date = action.payload.bornAt
         },
@@ -25,6 +27,7 @@ const currentProfileDataSlice = createSlice({
             state.id = action.payload.id
             state.first_name = action.payload.first_name
             state.last_name = action.payload.last_name
+            state.avatar = action.payload.avatar
             state.hometown = action.payload.homeTown
             state.birth_date = action.payload.bornAt
         },
