@@ -21,7 +21,7 @@ const AuthorizationForm = (props) => {
     ]
 
     const updateData = () => dispatch(logIn({
-        "login": login,
+        "username": login,
         "password": password
     }))
 

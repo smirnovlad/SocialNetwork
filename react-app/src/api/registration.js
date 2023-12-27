@@ -5,8 +5,6 @@ export const register = createAsyncThunk (
 'register',
     async function (data, {rejectWithValue}) {
         try {
-            console.log("reg data: ", data)
-
             let requestBody = {
                 first_name: data.first_name,
                 last_name: data.last_name,
