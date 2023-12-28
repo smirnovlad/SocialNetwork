@@ -52,7 +52,7 @@ INSTALLED_APPS = [
 
 ASGI_APPLICATION = 'backend.asgi.application'
 
-REDIS_HOST = "127.0.0.1" # "redis"
+REDIS_HOST = "redis" # "127.0.0.1"
 
 CHANNEL_LAYERS = {
     'default': {
@@ -147,7 +147,7 @@ USE_TZ = True
 
 CORS_ALLOW_CREDENTIALS = True
 
-HOST = "51.250.6.1"
+HOST = "158.160.113.82"
 
 CORS_ORIGIN_ALLOW_ALL = True
 
