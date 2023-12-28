@@ -46,7 +46,8 @@ const AuthorizationForm = (props) => {
                 })
             })
             .catch((rejectedValueOrSerializedError) => {
-                console.log(rejectedValueOrSerializedError)
+                alert(rejectedValueOrSerializedError.message);
+                console.log(rejectedValueOrSerializedError);
             })
     }
 

@@ -1,2 +1,2 @@
-export const HOST = "localhost" // # "51.250.6.1"
-export const WS_PORT = "8000" // "9000"
+export const HOST = "158.160.113.82" // "localhost"
+export const WS_PORT = "9000" // "8000"
