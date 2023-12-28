@@ -72,16 +72,28 @@ docker context create remoteContext --docker host=ssh://smirnovlad@158.160.113.8
 docker-compose --context remoteContext up -d
 ```
 
-**Замечание:** для обновления, например, хоста контекста выполните
+#### Extra
+
+- Для обновления, например, хоста контекста выполните
 ```
 docker context update \
     --docker "host=ssh://smirnovlad@158.160.113.82" \
     remoteContext
 ```
 
-**Замечание:** для удаления контекста выполните
+- Для удаления контекста выполните
 ```
 docker context rm remoteContext
+```
+
+- Команда для остановки контейнеров:
+```
+docker stop $(docker ps -a -q)
+```
+
+- Команда для удаления всех образов:
+```
+docker system prune -a --volumes
 ```
 
 ## Макет веб-приложения
