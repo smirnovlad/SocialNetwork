@@ -29,6 +29,6 @@ jobs:
           ssh-keyscan -t rsa 158.160.113.82 >> ~/.ssh/known_hosts
 
           docker context create remoteContext --docker host=ssh://smirnovlad@158.160.113.82
-          docker-compose --context remoteContext up --build
+          docker-compose --context remoteContext up --build -d
         env:
           SSH_AUTH_SOCK: /dev/null
