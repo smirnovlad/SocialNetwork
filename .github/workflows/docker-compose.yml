@@ -16,12 +16,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up docker compose
+      - name: Set up Docker Compose
         run: |
           sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
-      - name: Create docker context
-        run: docker context create remoteContext --docker host=ssh://smirnovlad@158.160.113.82
 
-      - name: Deploy with docker compose
-        run: docker-compose --context remoteContext up --build
+      - name: Set up SSH and deploy
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa 158.160.113.82 >> ~/.ssh/known_hosts
+
+          docker context create remoteContext --docker host=ssh://smirnovlad@158.160.113.82
+          docker-compose --context remoteContext up --build
+        env:
+          SSH_AUTH_SOCK: /dev/null
