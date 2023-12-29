@@ -11,6 +11,8 @@ services:
       - redis
     ports:
         - "8000:8000"
+    volumes:
+      - db_volume:/db.sqlite3
 
   asgiserver:
     build:
@@ -55,3 +57,4 @@ services:
       - frontend
 volumes:
   static:
+  db_volume:
