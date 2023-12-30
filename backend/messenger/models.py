@@ -29,6 +29,11 @@ class Chat(models.Model):
     firstUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="chat_first_user")
     secondUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name="chat_second_user")
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['firstUser', 'secondUser'], name='unique_firstUser_secondUser')
+        ]
+
 
 class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="message_chat")

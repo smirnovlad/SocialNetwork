@@ -89,8 +89,7 @@ const LeftColumn = (props) => {
     const openChat = async function ()  {
         const token = store.getState().authorizedUserInfo.token;
         const secondUserId = params.userid;
-        const senderUserId = store.getState().authorizedUserInfo.id;
-        const chat = await getChat({token, senderUserId, secondUserId});
+        const chat = await getChat({token, secondUserId});
         navigate(`/chat/${chat.id}`);
     }
 

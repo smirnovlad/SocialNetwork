@@ -138,11 +138,10 @@ export const fetchChatList = async function (data) {
 }
 
 export const createChat = async function (data) {
-    let {token, senderUserId, secondUserId} = data
+    let {token, secondUserId} = data
 
     let url = `http://${HOST}:8000/messenger/api/v1/chatlist/`
     let requestBody = {
-        firstUser: senderUserId,
         secondUser: secondUserId
     }
     const response = await fetch(url, {
@@ -161,7 +160,7 @@ export const createChat = async function (data) {
 }
 
 export const getChat = async function (data) {
-    const {token, senderUserId, secondUserId} = data;
+    const {token, secondUserId} = data;
     const chatList = await fetchChatList({token});
 
     const chat = chatList.filter((item) => {
@@ -169,7 +168,7 @@ export const getChat = async function (data) {
             parseInt(item.secondUser) === parseInt(secondUserId);
     })
     if (chat.length === 0) {
-        return await createChat({token, senderUserId, secondUserId});
+        return await createChat({token, secondUserId});
     } else {
         return chat[0];
     }

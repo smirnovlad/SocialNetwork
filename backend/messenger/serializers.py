@@ -22,6 +22,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 class ChatSerializer(serializers.ModelSerializer):
+    firstUser = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Chat
         fields = '__all__'

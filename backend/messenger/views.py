@@ -79,6 +79,20 @@ class ChatAPIViews(mixins.ListModelMixin, CustomInstanceAPIViews):
     def get_queryset(self):
         return Chat.objects.filter(Q(firstUser=self.request.user.id) | Q(secondUser=self.request.user.id))
 
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            if (self.request.user.id < serializer.validated_data['secondUser'].id):
+                serializer.validated_data['firstUser'] = self.request.user
+            else:
+                serializer.validated_data['firstUser'] = serializer.validated_data['secondUser']
+                serializer.validated_data['secondUser'] = self.request.user
+
+            serializer.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 class FeedbackInstanceAPIViews(CustomInstanceAPIViews):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
