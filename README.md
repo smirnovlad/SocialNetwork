@@ -1,37 +1,36 @@
 # HuaMao
 
-## Идея проекта
+## Project idea
 
-**HuaMao** &ndash; социальная сеть. Реализованный функционал:
+**HuaMao** is a social network with the following implemented features:
 <ol>
-    <li> Авторизация на сайте
-    <li> Создание личного профиля с возможностью его редактирования (фото, день рождения, город проживания)
-    <li> Добавление друзей
-    <li> Синхронизированный обмен сообщениями
-    <li> Возможность оставить отзыв о сайте
+    <li> Site authorization
+    <li> Creation of a personal profile with the ability to edit it (photo, birthday, city of residence)
+    <li> Adding friends
+    <li> Synchronized message exchange
+    <li> Ability to leave feedback about the site
 </ol>
 
-### Особенности реализации
+### Implementation details
 
-- Макет веб-приложения: [design in Figma](https://www.figma.com/file/hlFAIfFrGb8HHlGH0B2Uy7/HuaoMao?type=design&node-id=0-1&mode=design&t=LrnYanTZAVLeXxYG-0)
+- Web application design: [design in Figma](https://www.figma.com/file/hlFAIfFrGb8HHlGH0B2Uy7/HuaoMao?type=design&node-id=0-1&mode=design&t=LrnYanTZAVLeXxYG-0)
 
-- Бэкенд приложения написан на Django. Для аутентефикации используется djoser, для нотификации по веб-сокетам — Django Channels.
+- The backend of the application is written in Django. Djoser is used for authentication, and Django Channels for WebSocket notification.
 
-- Фронтенд написан на React + Redux.
+- Frontend is developed using React + Redux.
 
-### Пример работы
+### Example
 
-На момент написания README приложение крутится на сервере http://158.160.113.82/. Виртуальная машина (сервер) арендуется в Yandex Cloud.
-
-#### Обычный пользователь
+At the time of writing this README, the application is hosted on the server http://158.160.113.82/. The virtual machine (server) is rented on Yandex Cloud.
+#### Regular user
 
 ![MVP.gif](samples/MVP.gif)
 
-#### Работа в роли админа
+#### Admin workflow
 
 ![AdminWorkflow.gif](samples/AdminWorkflow.gif)
 
-Неавторизованному пользователю доступны следующие страницы для просмотра:
+Unauthenticated users can view the following pages:
 
 - http://158.160.113.82/login
 - http://158.160.113.82/profile/<id\>
@@ -40,97 +39,98 @@
 
 ## CI/CD
 
-При пуше и пул-реквесте в главную ветку триггерится workflow, который включает в себя тестирование приложения с последующим деплоем на удалённый сервер в случае успеха. Для базы данных выделяется отдельный volume, вследствие чего при очередном обновлении её состояние остаётся актуальным (не сбрасывается).
-
+Upon push and pull request to the main branch, a workflow is triggered. It includes testing the application and deploying it to the remote server in case of success. A separate volume is allocated for the database, ensuring that its state remains current (not reset) with each update.
 ## How to build
 ### Locally
-Для начала необходимо обновить константы в `backend/backend/settings.py` и `react-app/src/api/config.js`, соответствующие хосту и портам.
-1. Применить миграции к моделям данных из директории backend:
+First, update the constants in `backend/backend/settings.py` and `react-app/src/api/config.js`, corresponding to the host and ports.
+1. Apply migrations to data models from the backend directory:
 ```
 python3 manage.py migrate
 ```
 
-2. Поднять сервер из директории backend:
+2. Run the server from the backend directory:
 ```
 python3 manage.py runserver
 ```
 
-3. Запустить докер-контейнер для работы сокетов с Redis channels:
+3. Start the Docker container for handling sockets with Redis channels:
 ```
 docker run -p 6379:6379 -d redis:5
 ```
 
-4. Запустить реакт-приложение из директории react-app:
+4. Run the React application from the react-app directory:
 ```
 npm install
 npm start
 ```
 
+
+
 ### Dockerization
 #### Local
-1. Сначала поднимем контейнер. Из корневой папки проекта (там, где лежит docker-compose.yml) выполним
+1. First, bring up the container. From the project's root folder (where `docker-compose.yml` is located), execute:
 ```
 docker-compose up -d
 ```
-Для пересборки образов необходимо выполнить
+To rebuild images, execute:
 ```
 docker-compose up --build
 ```
-2. Если выполнение команды завершается с ошибкой
+2. If the command ends with an error like:
 ```
 ERROR: for nginx  Cannot start service nginx: Ports are not available: exposing port TCP 0.0.0.0:80 -> 0.0.0.0:0: listen tcp 0.0.0.0:80: bind: address already in use
 ```
-проверьте, какой процесс занимает 80 порт
+Check which process is occupying port 80:
 ```
 sudo lsof -i :80
 ```
-Завершите этот процесс с помощью команды
+Terminate that process using:
 ```
 sudo kill -9 <pid>
 ```
-Если порт занят сервером Apache, выполните
+If the port is occupied by the Apache server, run:
 ```
 /etc/init.d/apache2 stop
 ```
 #### Remote
-Пусть **158.160.113.82** - IP сервера, на котором мы хотим запустить наше приложение.
-1. Создадим контекст для удалённого ssh:
+Assuming **158.160.113.82** is the IP of the server where we want to run our application.
+1. Create a context for remote SSH:
 ```
 docker context create remoteContext --docker host=ssh://smirnovlad@158.160.113.82
 ```
-2. Осталось поднять контейнер с remote-контекстом:
+2. Now, start the container with the remote context:
 ```
 docker-compose --context remoteContext up -d
 ```
 
 #### Extra
 
-- Для обновления, например, хоста контекста выполните
+- To update, for example, the host of the context:
 ```
 docker context update \
     --docker "host=ssh://smirnovlad@158.160.113.82" \
     remoteContext
 ```
 
-- Для удаления контекста выполните
+- To remove the context:
 ```
 docker context rm remoteContext
 ```
 
-- Команда для остановки контейнеров:
+- Command to stop all containers:
 ```
 docker stop $(docker ps -a -q)
 ```
 
-- Команда для удаления всех образов:
+- Command to remove all images:
 ```
 docker system prune -a --volumes
 ```
 
 ## TODO
 
-1. Придумать более комплексные тесты (запросы на удалённый сервер, аутентефикация и т.д.)
-2. Перейти на JWT-токены
-3. Добавить криптографические зависимости
-4. Добавить поддержку SEO
-5. Нотификация о сообщениях вне чата
+1. Devise more comprehensive tests (requests to the remote server, authentication, etc.)
+2. Transition to JWT tokens
+3. Add cryptographic dependencies
+4. Add SEO support
+5. Message notification outside the chat
