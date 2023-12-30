@@ -1,4 +1,4 @@
-name: Deploy to remote server
+name: Test app and deploy to remote server
 
 on:
   push:
