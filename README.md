@@ -1,8 +1,8 @@
-# HuaMao
+# HuaoMao
 
 ## Project idea
 
-**HuaMao** is a social network with the following implemented features:
+**HuaoMao** is a social network with the following implemented features:
 <ol>
     <li> Site authorization
     <li> Creation of a personal profile with the ability to edit it (photo, birthday, city of residence)
